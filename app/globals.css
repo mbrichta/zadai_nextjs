@@ -1,0 +1,94 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@tailwind typography; /* for the .prose classes */
+/* 
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+} */
+@layer base {
+  :root {
+    --background: 207 32% 100%;
+    --foreground: 207 67% 0%;
+    --muted: 177 38% 95%;
+    --muted-foreground: 177 4% 38%;
+    --popover: 207 32% 100%;
+    --popover-foreground: 207 67% 0%;
+    --card: 0 0% 99%;
+    --card-foreground: 0 0% 0%;
+    --border: 207 8% 90%;
+    --input: 207 8% 90%;
+    --primary: 207 33% 21%;
+    --primary-foreground: 207 33% 81%;
+    --secondary: 177 33% 21%;
+    --secondary-foreground: 177 33% 81%;
+    --accent: 237 33% 21%;
+    --accent-foreground: 237 33% 81%;
+    --destructive: 6 89% 36%;
+    --destructive-foreground: 6 89% 96%;
+    --ring: 207 33% 21%;
+    --chart-1: 207 33% 21%;
+    --chart-2: 177 33% 21%;
+    --chart-3: 237 33% 21%;
+    --chart-4: 177 33% 24%;
+    --chart-5: 207 36% 21%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 207 44% 2%;
+    --foreground: 207 18% 98%;
+    --muted: 177 38% 5%;
+    --muted-foreground: 177 4% 62%;
+    --popover: 207 44% 2%;
+    --popover-foreground: 207 18% 98%;
+    --card: 207 44% 3%;
+    --card-foreground: 207 18% 99%;
+    --border: 207 8% 11%;
+    --input: 207 8% 11%;
+    --primary: 207 33% 21%;
+    --primary-foreground: 207 33% 81%;
+    --secondary: 177 33% 21%;
+    --secondary-foreground: 177 33% 81%;
+    --accent: 237 33% 21%;
+    --accent-foreground: 237 33% 81%;
+    --destructive: 6 89% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --ring: 207 33% 21%;
+    --chart-1: 207 33% 21%;
+    --chart-2: 177 33% 21%;
+    --chart-3: 237 33% 21%;
+    --chart-4: 177 33% 24%;
+    --chart-5: 207 36% 21%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .is-visible {
+    @apply opacity-100 translate-y-0;
+  }
+
+  .is-visible li {
+    opacity: 1 !important;
+    transform: translateX(0) !important;
+  }
+}
