@@ -2,23 +2,23 @@
 
 import Image from "next/image";
 
-const members = [
+type Member = {
+  name: string;
+  title: string;
+  image: string;
+  description: string;
+  socialLinks: {
+    linkedin: string;
+    x: string;
+    dribbble: string;
+  };
+};
+
+const members: Member[] = [
   {
     name: "Mathias Brichta",
-    title: "Business Analyst",
-    image: "/mathias.png",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.",
-    socialLinks: {
-      linkedin: "#",
-      x: "#",
-      dribbble: "#",
-    },
-  },
-  {
-    name: "Full name",
-    title: "Job Title",
-    image: "/placeholder.png",
+    title: "Analista de Negocios y Desarrollador",
+    image: "/images/me.png",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.",
     socialLinks: {
@@ -30,7 +30,7 @@ const members = [
   // Add more members as needed
 ];
 
-function Card({ member }) {
+function Card({ member }: { member: Member }) {
   return (
     <div className="flex flex-col items-center text-center sm:flex-row sm:text-left">
       <div className="relative w-64 h-80 flex-shrink-0">
@@ -44,8 +44,8 @@ function Card({ member }) {
           src={member.image}
           alt={member.name}
           fill
-          style={{ objectFit: "cover" }}
-          className="relative"
+          style={{ objectFit: "contain" }}
+          className="relative p-4 pb-0"
           sizes="(max-width: 768px) 100vw, 400px"
         />
       </div>
@@ -80,11 +80,14 @@ function Card({ member }) {
 
 export function Team() {
   return (
-    <section className="mx-auto max-w-7xl px-4 py-12 flex flex-col md:flex-row">
+    <section
+      id="team"
+      className="mx-auto max-w-4xl px-4 py-12 flex flex-col md:flex-row"
+    >
       <h2 className="mb-8 text-3xl font-bold">
-        ¿Quién está detrás de Buzo.digital?
+        ¿Quién está detrás de Zadai.ai?
       </h2>
-      <div className="grid gap-8 md:grid-cols-2">
+      <div className="grid gap-8 md:grid-cols-1">
         {members.map((member, index) => (
           <Card key={index} member={member} />
         ))}

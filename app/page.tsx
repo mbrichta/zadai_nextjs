@@ -3,7 +3,8 @@ import { Services } from "@/components/services";
 import { HowItWorks } from "@/components/how-it-works";
 import { Team } from "@/components/team";
 import HowWeWork from "@/components/how-we-work";
-import ContactForm from "@/components/contact-us";
+import ContactForm from "@/components/contact-section";
+import Footer from "@/components/footer";
 
 export default function Home() {
   return (
@@ -14,6 +15,7 @@ export default function Home() {
       <Team />
       <HowWeWork />
       <ContactForm />
+      <Footer />
     </div>
   );
 }
