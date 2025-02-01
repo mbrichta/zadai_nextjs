@@ -1,26 +1,37 @@
-// app/contact/ContactFormSmall.tsx
 "use client";
 
 import { useState } from "react";
 import { supabase } from "@/lib/supabase";
 import { Button } from "@/components/ui/button";
+import { services } from "./large-contact-form";
 
-interface Service {
-  id: string;
-  name: string;
-  value: string;
+interface dict {
+  [key: string]: any;
 }
-
 interface ContactFormProps {
-  services: Service[];
+  dictionary: dict;
 }
 
-export default function ContactFormSmall({ services }: ContactFormProps) {
+export default function ContactFormSmall({ dictionary }: ContactFormProps) {
+  const {
+    nameLabel,
+    emailLabel,
+    companyNameLabel,
+    servicesLabel,
+    recaptchaLabel,
+    recaptchaMessage,
+    noServicesMessage,
+    submitButton,
+    submittingButton,
+    successMessage,
+    errorMessage,
+  } = dictionary.contactForm;
+
   const [formData, setFormData] = useState({
     nombre: "",
     correo: "",
     nombreEmpresa: "",
-    servicios: services.length > 0 ? services[0].id : "",
+    servicios: services.length > 0 ? services[0].value : "",
     recaptchaConfirmado: false,
   });
 
@@ -47,40 +58,45 @@ export default function ContactFormSmall({ services }: ContactFormProps) {
     setSuccess(null);
 
     if (!formData.recaptchaConfirmado) {
-      setError("Por favor, confirma reCAPTCHA antes de enviar.");
+      setError(recaptchaMessage);
       return;
     }
 
     setSubmitting(true);
 
     try {
-      const { data, error } = await supabase.from("contacts").insert([
+      // Convert the selected service to English.
+      // Since the option values are already set to the English value,
+      // we verify by finding the matching entry.
+      const englishService =
+        services.find((service) => service.value === formData.servicios)
+          ?.value || formData.servicios;
+
+      const { error } = await supabase.from("contacts").insert([
         {
           name: formData.nombre,
           email: formData.correo,
           company: formData.nombreEmpresa,
-          interested_service_id: formData.servicios, // Assuming 'service_id' is the correct column name
+          interested_service: englishService,
         },
       ]);
 
       if (error) {
-        throw new Error(error.message);
+        // Log the raw error for debugging.
+        console.error("Error submitting form:", error.message);
+        throw new Error();
       }
 
-      setSuccess("¡Formulario enviado con éxito!");
-      // Reset form
+      setSuccess(successMessage);
       setFormData({
         nombre: "",
         correo: "",
         nombreEmpresa: "",
-        servicios: services.length > 0 ? services[0].id : "",
+        servicios: services.length > 0 ? services[0].value : "",
         recaptchaConfirmado: false,
       });
     } catch (err: any) {
-      setError(
-        err.message ||
-          "Hubo un error al enviar el formulario. Por favor, inténtalo de nuevo."
-      );
+      setError(errorMessage);
       console.error("Error submitting form:", err.message);
     } finally {
       setSubmitting(false);
@@ -99,7 +115,7 @@ export default function ContactFormSmall({ services }: ContactFormProps) {
       {/* Error Message */}
       {error && (
         <div className="mb-4 p-4 text-red-700 bg-red-100 border border-red-400 rounded">
-          Algo salió mal al enviar el formulario. Por favor, inténtalo de nuevo.
+          {error}
         </div>
       )}
 
@@ -110,7 +126,7 @@ export default function ContactFormSmall({ services }: ContactFormProps) {
             {/* Nombre */}
             <div className="w-full">
               <label htmlFor="nombre" className="block font-semibold">
-                Nombre
+                {nameLabel}
               </label>
               <input
                 type="text"
@@ -118,9 +134,8 @@ export default function ContactFormSmall({ services }: ContactFormProps) {
                 name="nombre"
                 value={formData.nombre}
                 onChange={handleChange}
-                className="block w-full border border-gray-400 rounded-md p-2 
-                        focus:outline-none focus:border-gray-600"
-                placeholder="Ingresa tu nombre"
+                className="block w-full border border-gray-400 rounded-md p-2 focus:outline-none focus:border-gray-600"
+                placeholder={nameLabel}
                 required
               />
             </div>
@@ -128,7 +143,7 @@ export default function ContactFormSmall({ services }: ContactFormProps) {
             {/* Correo */}
             <div className="w-full">
               <label htmlFor="correo" className="block font-semibold">
-                Correo Electrónico
+                {emailLabel}
               </label>
               <input
                 type="email"
@@ -136,9 +151,8 @@ export default function ContactFormSmall({ services }: ContactFormProps) {
                 name="correo"
                 value={formData.correo}
                 onChange={handleChange}
-                className="block w-full border border-gray-400 rounded-md p-2 
-                        focus:outline-none focus:border-gray-600"
-                placeholder="Ingresa tu correo"
+                className="block w-full border border-gray-400 rounded-md p-2 focus:outline-none focus:border-gray-600"
+                placeholder={emailLabel}
                 required
               />
             </div>
@@ -147,7 +161,7 @@ export default function ContactFormSmall({ services }: ContactFormProps) {
           {/* Nombre de la Empresa */}
           <div>
             <label htmlFor="nombreEmpresa" className="block mb-1 font-semibold">
-              ¿Cuál es el nombre de tu empresa?
+              {companyNameLabel}
             </label>
             <input
               type="text"
@@ -155,9 +169,8 @@ export default function ContactFormSmall({ services }: ContactFormProps) {
               name="nombreEmpresa"
               value={formData.nombreEmpresa}
               onChange={handleChange}
-              className="block w-full border border-gray-400 rounded-md p-2 
-                        focus:outline-none focus:border-gray-600"
-              placeholder="Ingresa el nombre de tu empresa"
+              className="block w-full border border-gray-400 rounded-md p-2 focus:outline-none focus:border-gray-600"
+              placeholder={companyNameLabel}
               required
             />
           </div>
@@ -165,7 +178,7 @@ export default function ContactFormSmall({ services }: ContactFormProps) {
           {/* Servicios de Interés */}
           <div>
             <label htmlFor="servicios" className="block mb-1 font-semibold">
-              ¿Qué servicios te interesan?
+              {servicesLabel}
             </label>
             {services.length > 0 ? (
               <select
@@ -173,30 +186,27 @@ export default function ContactFormSmall({ services }: ContactFormProps) {
                 name="servicios"
                 value={formData.servicios}
                 onChange={handleChange}
-                className="block w-full border border-gray-400 rounded-md p-2 
-                          focus:outline-none focus:border-gray-600"
+                className="block w-full border border-gray-400 rounded-md p-2 focus:outline-none focus:border-gray-600"
                 required
               >
                 {services.map((service) => (
-                  <option key={service.id} value={service.id}>
-                    {service.name}
+                  <option key={service.value} value={service.value}>
+                    {dictionary.contactPage.servicesOptions[service.labelKey]}
                   </option>
                 ))}
               </select>
             ) : (
               <p className="text-red-500">
-                No se encontraron servicios disponibles.
+                {dictionary.contactForm.noServicesMessage}
               </p>
             )}
           </div>
 
           {/* reCAPTCHA (Simulado) */}
           <div>
-            <label className="block mb-1 font-semibold">reCAPTCHA</label>
+            <label className="block mb-1 font-semibold">{recaptchaLabel}</label>
             <div
-              className="border border-gray-400 rounded-md p-2 flex items-center 
-                        justify-between cursor-pointer select-none 
-                        focus:outline-none focus:border-gray-600"
+              className="border border-gray-400 rounded-md p-2 flex items-center justify-between cursor-pointer select-none focus:outline-none focus:border-gray-600"
               onClick={handleRecaptchaFakeToggle}
             >
               <div className="flex items-center space-x-2">
@@ -206,7 +216,7 @@ export default function ContactFormSmall({ services }: ContactFormProps) {
                   onChange={handleRecaptchaFakeToggle}
                   className="h-4 w-4 text-primary border-gray-300 rounded"
                 />
-                <span className="text-sm text-gray-700">No soy un robot</span>
+                <span className="text-sm text-gray-700">{recaptchaLabel}</span>
               </div>
               <span className="text-gray-400 text-sm">reCAPTCHA</span>
             </div>
@@ -215,7 +225,7 @@ export default function ContactFormSmall({ services }: ContactFormProps) {
           {/* Submit Button */}
           <div className="text-center">
             <Button type="submit" disabled={submitting}>
-              {submitting ? "Enviando..." : "Enviar"}
+              {submitting ? submittingButton : submitButton}
             </Button>
           </div>
         </form>

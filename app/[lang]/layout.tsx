@@ -1,9 +1,9 @@
-import "./globals.css";
+import "../globals.css";
 import type { Metadata } from "next";
-// import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Inter } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Navbar } from "@/components/navbar";
+import { getDictionary } from "./dictionaries";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -12,16 +12,17 @@ export const metadata: Metadata = {
   description: "Transform your business with our digital solutions",
 };
 
-// const queryClient = new QueryClient();
-
-export default function RootLayout({
+export default async function RootLayout({
   children,
+  params: { lang },
 }: {
   children: React.ReactNode;
+  params: { lang: string };
 }) {
+  console.log({ langFromLayout: lang });
+  const dict = await getDictionary(lang);
   return (
-    <html lang="en" suppressHydrationWarning>
-      {/* <QueryClientProvider client={queryClient}> */}
+    <html lang={"lang"} suppressHydrationWarning>
       <body className={inter.className}>
         <ThemeProvider
           attribute="class"
@@ -29,11 +30,10 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Navbar />
+          <Navbar dictionary={dict} lang={lang} />
           <main className="pt-16">{children}</main>
         </ThemeProvider>
       </body>
-      {/* </QueryClientProvider> */}
     </html>
   );
 }

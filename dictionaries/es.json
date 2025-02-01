@@ -1,0 +1,223 @@
+{
+  "nav": {
+    "items": {
+      "home": "Inicio",
+      "services": "Servicios",
+      "aboutUs": "Sobre nosotros",
+      "howWeWork": "Cómo trabajamos",
+      "blog": "Blog",
+      "contactUs": "Contáctanos"
+    },
+    "scheduleCallLabel": "Agenda una llamada",
+    "openMenuLabel": "Abrir menú principal",
+    "languageSwitcherLabel": "Idioma"
+  },
+  "hero": {
+    "headingPart1": "Impulsa tu negocio con",
+    "headingPart2": "soluciones digitales de alto impacto",
+    "subheading": "Nuestro objetivo es llevar la transformación digital de tu empresa al siguiente nivel. Desde sitios web cautivadores hasta chatbots inteligentes y procesos automatizados, te ofrezco soluciones a medida para que destaques en un mundo cada vez más digital.",
+    "ctaLabel": "Agenda una llamada"
+  },
+  "services": {
+    "heading": "Cómo puedo mejorar tu empresa",
+    "items": [
+      {
+        "title": "Estrategia Digital Integrada",
+        "description": "Te acompaño en la creación de una estrategia digital completa. Desde definir tus objetivos hasta implementar soluciones concretas, trabajo contigo para construir un plan claro y medible que impulse el crecimiento de tu negocio."
+      },
+      {
+        "title": "Documentación de Procesos (SOPs)",
+        "description": "Creo manuales y procedimientos estándar para que cada tarea y operación de tu negocio esté documentada y sea fácil de replicar."
+      },
+      {
+        "title": "Automatización de Procesos",
+        "description": "Implemento herramientas como chatbots, flujos de trabajo y sistemas personalizados que te ahorran tiempo y dinero."
+      },
+      {
+        "title": "Desarrollo de Agentes de IA",
+        "description": "Automatiza procesos complejos y fomenta la innovación dentro de tu organización integrando soluciones avanzadas de IA adaptadas a tus necesidades específicas."
+      },
+      {
+        "title": "Optimización de Herramientas Digitales",
+        "description": "Simplifico tus procesos eliminando herramientas innecesarias y reemplazándolas con flujos integrados diseñados para tu empresa."
+      }
+    ]
+  },
+  "howItWorks": {
+    "heading": "Progresando por fases digitales",
+    "description": "Cada empresa tiene su propio camino hacia la transformación digital. Mi objetivo es ayudarte a identificar en qué fase te encuentras y guiarte hacia un modelo más eficiente, automatizado y alineado con las demandas del mercado actual. Juntos, podemos construir sistemas que optimicen tu tiempo, reduzcan costos y preparen a tu negocio para el futuro.",
+    "phases": [
+      {
+        "title": "Operaciones Analógicas",
+        "points": [
+          "Procesos completamente manuales.",
+          "Uso mínimo o nulo de herramientas digitales."
+        ]
+      },
+      {
+        "title": "Silos en la Nube",
+        "points": [
+          "Uso de herramientas digitales básicas (Google Workspace, Excel).",
+          "Los datos están distribuidos en múltiples aplicaciones."
+        ]
+      },
+      {
+        "title": "Nube Integrada",
+        "points": [
+          "Las herramientas empiezan a trabajar juntas.",
+          "Mejor flujo de datos, pero con procesos semi-manuales."
+        ]
+      },
+      {
+        "title": "Capa de Datos Unificada",
+        "points": [
+          "Todos los datos centralizados en una plataforma única.",
+          "Las decisiones se basan en información precisa y en tiempo real."
+        ]
+      },
+      {
+        "title": "Flujos Automatizados",
+        "points": [
+          "Uso avanzado de automatizaciones.",
+          "Intervención humana limitada a decisiones clave."
+        ]
+      },
+      {
+        "title": "Automatización con IA",
+        "points": [
+          "Implementación de inteligencia artificial para tareas predictivas.",
+          "Procesos optimizados y autoajustables."
+        ]
+      }
+    ]
+  },
+  "team": {
+    "heading": "¿Quién está detrás de Zadai.ai?",
+    "members": [
+      {
+        "name": "Mathias Brichta",
+        "title": "Analista de Negocios y Desarrollador",
+        "description": "Mathias está comprometido con ayudar a las empresas a adaptarse a la era digital, analizando sus necesidades y creando soluciones efectivas. Con experiencia en desarrollo y un enfoque en la optimización de procesos, conecta los desafíos empresariales con soluciones técnicas."
+      }
+    ]
+  },
+  "howWeWork": {
+    "heading": "Cómo trabajamos",
+    "subheading": "En Zadai.ai, combinamos estrategia y tecnología para optimizar tus procesos.",
+    "ctaLabel": "Agenda una llamada",
+    "steps": [
+      {
+        "title": "1. Alinear y Priorizar",
+        "content": "Entendemos tus necesidades y cuellos de botella para definir prioridades.",
+        "dotPosition": "bottom"
+      },
+      {
+        "title": "2. Documentar y Unificar",
+        "content": "Mapeamos procesos y centralizamos info para una sola fuente de verdad.",
+        "dotPosition": "top"
+      },
+      {
+        "title": "3. Automatizar, Delegar, Eliminar",
+        "content": "Identificamos tareas automatizables o delegables para mayor eficiencia.",
+        "dotPosition": "bottom"
+      },
+      {
+        "title": "4. ¡Implementar y Crecer!",
+        "content": "Capacitamos al equipo y supervisamos el arranque para crecimiento sostenible.",
+        "dotPosition": "top"
+      }
+    ]
+  },
+  "contactSection": {
+    "heading": "Contáctanos",
+    "slogan": "Tu socio en soluciones digitales",
+    "description": "Ponte en contacto para discutir cómo podemos ayudar a tu negocio a prosperar.",
+    "errorMessage": "Hubo un error al cargar los servicios. Por favor, inténtalo de nuevo más tarde."
+  },
+  "contact": {
+    "sectionTitle": "Contáctanos",
+    "form": {
+      "nameLabel": "Nombre",
+      "emailLabel": "Correo Electrónico",
+      "companyNameLabel": "Nombre de la empresa",
+      "servicesLabel": "¿Qué servicios te interesan?",
+      "messageLabel": "Mensaje",
+      "submitButton": "Enviar"
+    }
+  },
+  "contactForm": {
+    "nameLabel": "Nombre",
+    "emailLabel": "Correo Electrónico",
+    "companyNameLabel": "¿Cuál es el nombre de tu empresa?",
+    "servicesLabel": "¿Qué servicios te interesan?",
+    "recaptchaLabel": "No soy un robot",
+    "recaptchaMessage": "Por favor, confirma reCAPTCHA antes de enviar.",
+    "noServicesMessage": "No se encontraron servicios disponibles.",
+    "submitButton": "Enviar",
+    "submittingButton": "Enviando...",
+    "successMessage": "¡Formulario enviado con éxito!",
+    "errorMessage": "Hubo un error al enviar el formulario. Por favor, inténtalo de nuevo."
+  },
+  "footer": {
+    "logo": "Zadai.ai",
+    "navLinks": [
+      { "label": "Inicio", "href": "#" },
+      { "label": "Servicios", "href": "#services" },
+      { "label": "Sobre Nosotros", "href": "#team" }
+    ],
+    "socialLinks": {
+      "linkedIn": "https://linkedin.com/in/mathias-brichta",
+      "instagram": "https://intagram.com/mathiasbrichta"
+    },
+    "legal": {
+      "copyright": "© 2024 Zadai.ai. Todos los derechos reservados.",
+      "links": {
+        "privacyPolicy": "Política de Privacidad",
+        "termsOfService": "Términos del Servicio",
+        "cookiesSettings": "Configuración de Cookies"
+      }
+    }
+  },
+  "contactPage": {
+    "workingTogether": "Trabajemos juntos",
+    "contactUs": "Contáctanos",
+    "contactDescription": "Por favor, complete el siguiente formulario y nos pondremos en contacto contigo.",
+    "name": "Nombre",
+    "email": "Correo electrónico",
+    "role": "Rol",
+    "companyName": "Nombre de la empresa",
+    "companySize": "Tamaño de la empresa",
+    "annualRevenue": "Ingresos anuales",
+    "interestedServices": "Servicios de interés",
+    "recaptcha": "reCAPTCHA",
+    "notARobot": "No soy un robot",
+    "submit": "Enviar",
+    "requiredFieldsError": "El nombre, correo electrónico y los servicios de interés son obligatorios.",
+    "placeholders": {
+      "name": "Ingresa tu nombre",
+      "email": "Ingresa tu correo electrónico",
+      "role": "Ingresa tu rol",
+      "companyName": "Ingresa el nombre de tu empresa"
+    },
+    "companySizeOptions": [
+      "Menos de 20",
+      "De 20 a 200",
+      "De 201 a 500",
+      "Más de 500"
+    ],
+    "annualRevenueOptions": [
+      "Menos de 100k",
+      "De 100k a 500k",
+      "De 500k a 1m",
+      "Más de 1m"
+    ],
+    "servicesOptions": {
+      "workflowAutomation": "Automatización de flujos de trabajo",
+      "aiAgentDevelopment": "Desarrollo de agentes de IA",
+      "internalCustomTools": "Herramientas internas personalizadas"
+    },
+    "recaptchaMessage": "Por favor, confirma que no eres un robot.",
+    "successMessage": "¡Tu mensaje ha sido enviado exitosamente!",
+    "errorMessage": "Hubo un error al enviar el formulario. Por favor, inténtalo de nuevo más tarde."
+  }
+}

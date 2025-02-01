@@ -1,36 +1,56 @@
 "use client";
 
-import Image from "next/image";
+import { dict } from "@/app/[lang]/page";
+import { Instagram, InstagramIcon, LinkedinIcon } from "lucide-react";
+import Image, { StaticImageData } from "next/image";
+import me from "public/images/me.png";
 
 type Member = {
   name: string;
   title: string;
-  image: string;
   description: string;
-  socialLinks: {
-    linkedin: string;
-    x: string;
-    dribbble: string;
+};
+
+type TeamDictionary = {
+  team: {
+    heading: string;
+    members: Member[];
   };
 };
 
-const members: Member[] = [
+type TeamProps = {
+  dictionary: dict;
+};
+
+const TEAM_MEMBERS: (Member & {
+  image: StaticImageData;
+  socialLinks: {
+    linkedin: string;
+    instagram: string;
+  };
+})[] = [
   {
     name: "Mathias Brichta",
-    title: "Analista de Negocios y Desarrollador",
-    image: "/images/me.png",
+    title: "Business Analyst and Developer",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.",
+    image: me,
     socialLinks: {
-      linkedin: "#",
-      x: "#",
-      dribbble: "#",
+      linkedin: "https://linkedin.com/in/mathias-brichta",
+      instagram: "https://intagram.com/mathiasbrichta",
     },
   },
-  // Add more members as needed
 ];
 
-function Card({ member }: { member: Member }) {
+function Card({
+  member,
+  socialLinks,
+  image,
+}: {
+  member: Member;
+  socialLinks: { linkedin: string; instagram: string };
+  image: StaticImageData;
+}) {
   return (
     <div className="flex flex-col items-center text-center sm:flex-row sm:text-left">
       <div className="relative w-64 h-80 flex-shrink-0">
@@ -41,7 +61,7 @@ function Card({ member }: { member: Member }) {
           }}
         />
         <Image
-          src={member.image}
+          src={image}
           alt={member.name}
           fill
           style={{ objectFit: "contain" }}
@@ -49,28 +69,23 @@ function Card({ member }: { member: Member }) {
           sizes="(max-width: 768px) 100vw, 400px"
         />
       </div>
+
       <div className="mt-4 sm:ml-6 sm:mt-0">
         <h3 className="text-xl font-semibold">{member.name}</h3>
         <p className="text-sm text-gray-600">{member.title}</p>
         <p className="mt-2 text-sm text-gray-500">{member.description}</p>
         <div className="mt-3 flex justify-center space-x-4 sm:justify-start">
           <a
-            href={member.socialLinks.linkedin}
+            href={socialLinks.linkedin}
             className="text-gray-600 hover:text-gray-800"
           >
-            LinkedIn
+            <LinkedinIcon className="h-5 w-5" />
           </a>
           <a
-            href={member.socialLinks.x}
+            href={socialLinks.instagram}
             className="text-gray-600 hover:text-gray-800"
           >
-            X
-          </a>
-          <a
-            href={member.socialLinks.dribbble}
-            className="text-gray-600 hover:text-gray-800"
-          >
-            Dribbble
+            <Instagram className="h-5 w-5" />
           </a>
         </div>
       </div>
@@ -78,19 +93,31 @@ function Card({ member }: { member: Member }) {
   );
 }
 
-export function Team() {
+export function Team({ dictionary }: dict) {
+  const { heading, members } = dictionary.team;
+
   return (
     <section
       id="team"
-      className="mx-auto max-w-4xl px-4 py-12 flex flex-col md:flex-row"
+      className="mx-auto max-w-4xl px-4 py-12 flex flex-col md:flex-row gap-4"
     >
-      <h2 className="mb-8 text-3xl font-bold">
-        ¿Quién está detrás de Zadai.ai?
-      </h2>
+      <h2 className="mb-8 text-3xl font-bold">{heading}</h2>
+
       <div className="grid gap-8 md:grid-cols-1">
-        {members.map((member, index) => (
-          <Card key={index} member={member} />
-        ))}
+        {TEAM_MEMBERS.map((teamMember, index) => {
+          const translatedMember = members.find(
+            (m: Member) => m.name === teamMember.name
+          );
+
+          return (
+            <Card
+              key={index}
+              member={translatedMember || teamMember} // Use translated text if available
+              socialLinks={teamMember.socialLinks}
+              image={teamMember.image}
+            />
+          );
+        })}
       </div>
     </section>
   );

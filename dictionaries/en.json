@@ -1,0 +1,224 @@
+{
+  "nav": {
+    "items": {
+      "home": "Home",
+      "services": "Services",
+      "aboutUs": "About Us",
+      "howWeWork": "How We Work",
+      "blog": "Blog",
+      "contactUs": "Contact Us"
+    },
+    "scheduleCallLabel": "Schedule a call",
+    "openMenuLabel": "Open main menu",
+    "languageSwitcherLabel": "Language"
+  },
+  "hero": {
+    "headingPart1": "Boost your business with",
+    "headingPart2": "high-impact digital solutions",
+    "subheading": "Our goal is to take your company's digital transformation to the next level. From captivating websites to intelligent chatbots and automated processes, I offer tailored solutions to help you stand out in an increasingly digital world.",
+    "ctaLabel": "Schedule a call"
+  },
+  "services": {
+    "heading": "How I can improve your business",
+    "items": [
+      {
+        "title": "Integrated Digital Strategy",
+        "description": "I assist you in creating a complete digital strategy. From defining your goals to implementing concrete solutions, I work with you to build a clear and measurable plan to drive your business growth."
+      },
+      {
+        "title": "Process Documentation (SOPs)",
+        "description": "I create standard operating procedures and manuals to ensure every task and operation in your business is documented and easy to replicate."
+      },
+      {
+        "title": "Process Automation",
+        "description": "I implement tools like chatbots, workflows, and custom systems to save you time and money."
+      },
+      {
+        "title": "AI Agent Development",
+        "description": "Automate complex processes and drive innovation within your organization by integrating advanced AI solutions tailored to your specific needs."
+      },
+      {
+        "title": "Digital Tools Optimization",
+        "description": "I simplify your processes by removing unnecessary tools and replacing them with integrated workflows tailored to your business."
+      }
+    ]
+  },
+  "howItWorks": {
+    "heading": "Progressing Through Digital Phases",
+    "description": "Every company has its own path to digital transformation. My goal is to help you identify your current phase and guide you toward a more efficient, automated model aligned with today's market demands. Together, we can build systems that optimize your time, reduce costs, and prepare your business for the future.",
+    "phases": [
+      {
+        "title": "Analog Operations",
+        "points": [
+          "Completely manual processes.",
+          "Minimal or no use of digital tools."
+        ]
+      },
+      {
+        "title": "Cloud Silos",
+        "points": [
+          "Use of basic digital tools (Google Workspace, Excel).",
+          "Data distributed across multiple applications."
+        ]
+      },
+      {
+        "title": "Integrated Cloud",
+        "points": [
+          "Tools begin working together.",
+          "Better data flow, but with semi-manual processes."
+        ]
+      },
+      {
+        "title": "Unified Data Layer",
+        "points": [
+          "All data centralized in a single platform.",
+          "Decisions are based on accurate, real-time information."
+        ]
+      },
+      {
+        "title": "Automated Workflows",
+        "points": [
+          "Advanced use of automations.",
+          "Human intervention limited to key decisions."
+        ]
+      },
+      {
+        "title": "AI Automation",
+        "points": [
+          "Implementation of artificial intelligence for predictive tasks.",
+          "Optimized and self-adjusting processes."
+        ]
+      }
+    ]
+  },
+  "team": {
+    "heading": "Who is behind Zadai.ai?",
+    "members": [
+      {
+        "name": "Mathias Brichta",
+        "title": "Business Analyst and Developer",
+        "description": "Mathias is passionate about helping businesses transition into the digital age by analyzing their needs and creating effective solutions. With experience in development and a keen eye for process optimization, he bridges the gap between business challenges and technical solutions."
+      }
+    ]
+  },
+  "howWeWork": {
+    "heading": "How We Work",
+    "subheading": "At Zadai.ai, we combine strategy and technology to optimize your processes.",
+    "ctaLabel": "Schedule a call",
+    "steps": [
+      {
+        "title": "1. Align and Prioritize",
+        "content": "We understand your needs and bottlenecks to define priorities.",
+        "dotPosition": "bottom"
+      },
+      {
+        "title": "2. Document and Unify",
+        "content": "We map processes and centralize information for a single source of truth.",
+        "dotPosition": "top"
+      },
+      {
+        "title": "3. Automate, Delegate, Eliminate",
+        "content": "We identify tasks that can be automated or delegated for greater efficiency.",
+        "dotPosition": "bottom"
+      },
+      {
+        "title": "4. Implement and Grow!",
+        "content": "We train your team and oversee the launch for sustainable growth.",
+        "dotPosition": "top"
+      }
+    ]
+  },
+  "contactSection": {
+    "heading": "Contact Us",
+    "slogan": "Your Partner in Digital Solutions",
+    "description": "Get in touch to discuss how we can help your business thrive.",
+    "errorMessage": "There was an error loading services. Please try again later."
+  },
+  "contact": {
+    "sectionTitle": "Contact Us",
+    "form": {
+      "nameLabel": "Name",
+      "emailLabel": "Email Address",
+      "companyNameLabel": "Company Name",
+      "servicesLabel": "Which services interest you?",
+      "messageLabel": "Message",
+      "submitButton": "Send"
+    }
+  },
+  "contactForm": {
+    "nameLabel": "Name",
+    "emailLabel": "Email",
+    "companyNameLabel": "What is your company name?",
+    "servicesLabel": "What services are you interested in?",
+    "recaptchaLabel": "I am not a robot",
+    "recaptchaMessage": "Please confirm reCAPTCHA before submitting.",
+    "noServicesMessage": "No available services found.",
+    "submitButton": "Submit",
+    "submittingButton": "Submitting...",
+    "successMessage": "Form successfully submitted!",
+    "errorMessage": "There was an error submitting the form. Please try again."
+  },
+  "footer": {
+    "logo": "Zadai.ai",
+    "navLinks": [
+      { "label": "Home", "href": "#" },
+      { "label": "Services", "href": "#services" },
+      { "label": "About Us", "href": "#team" }
+    ],
+    "socialLinks": {
+      "linkedIn": "https://linkedin.com/in/mathias-brichta",
+      "twitter": "https://twitter.com",
+      "instagram": "https://intagram.com/mathiasbrichta"
+    },
+    "legal": {
+      "copyright": "© 2024 Zadai.ai. All rights reserved.",
+      "links": {
+        "privacyPolicy": "Privacy Policy",
+        "termsOfService": "Terms of Service",
+        "cookiesSettings": "Cookies Settings"
+      }
+    }
+  },
+  "contactPage": {
+    "workingTogether": "Let's Work Together",
+    "contactUs": "Contact Us",
+    "contactDescription": "Please fill out the form below and we will get back to you.",
+    "name": "Name",
+    "email": "Email",
+    "role": "Role",
+    "companyName": "Company Name",
+    "companySize": "Company Size",
+    "annualRevenue": "Annual Revenue",
+    "interestedServices": "Interested Services",
+    "recaptcha": "reCAPTCHA",
+    "notARobot": "I'm not a robot",
+    "submit": "Submit",
+    "requiredFieldsError": "Name, Email, and Interested Services are required.",
+    "placeholders": {
+      "name": "Enter your name",
+      "email": "Enter your email",
+      "role": "Enter your role",
+      "companyName": "Enter your company name"
+    },
+    "companySizeOptions": [
+      "Less than 20",
+      "20 to 200",
+      "201 to 500",
+      "More than 500"
+    ],
+    "annualRevenueOptions": [
+      "Less than 100k",
+      "100k to 500k",
+      "500k to 1m",
+      "More than 1m"
+    ],
+    "servicesOptions": {
+      "workflowAutomation": "Workflow Automation",
+      "aiAgentDevelopment": "AI Agent Development",
+      "internalCustomTools": "Internal Custom Tools"
+    },
+    "recaptchaMessage": "Please confirm you are not a robot.",
+    "successMessage": "Your message has been sent successfully!",
+    "errorMessage": "There was an error submitting the form. Please try again later."
+  }
+}

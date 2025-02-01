@@ -1,0 +1,224 @@
+{
+  "nav": {
+    "items": {
+      "home": "Startseite",
+      "services": "Dienstleistungen",
+      "aboutUs": "Über uns",
+      "howWeWork": "Wie wir arbeiten",
+      "blog": "Blog",
+      "contactUs": "Kontakt"
+    },
+    "scheduleCallLabel": "Termin vereinbaren",
+    "openMenuLabel": "Hauptmenü öffnen",
+    "languageSwitcherLabel": "Sprache"
+  },
+  "hero": {
+    "headingPart1": "Steigern Sie Ihr Geschäft mit",
+    "headingPart2": "hochwirksamen digitalen Lösungen",
+    "subheading": "Unser Ziel ist es, die digitale Transformation Ihres Unternehmens auf die nächste Stufe zu bringen. Von überzeugenden Websites über intelligente Chatbots bis hin zu automatisierten Prozessen biete ich maßgeschneiderte Lösungen, damit Sie in einer zunehmend digitalen Welt herausstechen.",
+    "ctaLabel": "Einen Anruf vereinbaren"
+  },
+  "services": {
+    "heading": "Wie ich Ihr Unternehmen verbessern kann",
+    "items": [
+      {
+        "title": "Integrierte Digitalstrategie",
+        "description": "Ich unterstütze Sie bei der Erstellung einer vollständigen digitalen Strategie. Von der Definition Ihrer Ziele bis zur Umsetzung konkreter Lösungen arbeite ich mit Ihnen zusammen, um einen klaren und messbaren Plan für das Wachstum Ihres Unternehmens zu entwickeln."
+      },
+      {
+        "title": "Prozessdokumentation (SOPs)",
+        "description": "Ich erstelle Standardarbeitsanweisungen und Handbücher, damit jede Aufgabe und jeder Vorgang in Ihrem Unternehmen dokumentiert und leicht reproduzierbar ist."
+      },
+      {
+        "title": "Prozessautomatisierung",
+        "description": "Ich implementiere Tools wie Chatbots, Workflows und maßgeschneiderte Systeme, die Ihnen Zeit und Geld sparen."
+      },
+      {
+        "title": "KI-Agentenentwicklung",
+        "description": "Automatisieren Sie komplexe Prozesse und fördern Sie Innovationen in Ihrer Organisation durch die Integration fortschrittlicher, auf Ihre spezifischen Bedürfnisse zugeschnittener KI-Lösungen."
+      },
+      {
+        "title": "Optimierung digitaler Werkzeuge",
+        "description": "Ich vereinfache Ihre Prozesse, indem ich überflüssige Werkzeuge entferne und durch integrierte Workflows ersetze, die auf Ihr Unternehmen zugeschnitten sind."
+      }
+    ]
+  },
+  "howItWorks": {
+    "heading": "Fortschritte durch digitale Phasen",
+    "description": "Jedes Unternehmen hat seinen eigenen Weg zur digitalen Transformation. Mein Ziel ist es, Ihnen zu helfen, Ihre aktuelle Phase zu erkennen und Sie zu einem effizienteren, automatisierten Modell zu führen, das den Anforderungen des heutigen Marktes entspricht. Gemeinsam können wir Systeme entwickeln, die Ihre Zeit optimieren, Kosten senken und Ihr Unternehmen für die Zukunft vorbereiten.",
+    "phases": [
+      {
+        "title": "Analoge Operationen",
+        "points": [
+          "Vollständig manuelle Prozesse.",
+          "Minimale oder keine Nutzung digitaler Werkzeuge."
+        ]
+      },
+      {
+        "title": "Cloud-Silos",
+        "points": [
+          "Verwendung grundlegender digitaler Werkzeuge (Google Workspace, Excel).",
+          "Daten sind über mehrere Anwendungen verteilt."
+        ]
+      },
+      {
+        "title": "Integrierte Cloud",
+        "points": [
+          "Werkzeuge beginnen zusammenzuarbeiten.",
+          "Besserer Datenfluss, aber mit halbmanuellen Prozessen."
+        ]
+      },
+      {
+        "title": "Vereinheitlichte Datenschicht",
+        "points": [
+          "Alle Daten zentralisiert auf einer Plattform.",
+          "Entscheidungen basieren auf genauen, aktuellen Informationen."
+        ]
+      },
+      {
+        "title": "Automatisierte Workflows",
+        "points": [
+          "Erweiterte Nutzung von Automatisierungen.",
+          "Menschliches Eingreifen auf wichtige Entscheidungen beschränkt."
+        ]
+      },
+      {
+        "title": "KI-Automatisierung",
+        "points": [
+          "Einsatz künstlicher Intelligenz für prädiktive Aufgaben.",
+          "Optimierte und selbstanpassende Prozesse."
+        ]
+      }
+    ]
+  },
+  "team": {
+    "heading": "Wer steht hinter Zadai.ai?",
+    "members": [
+      {
+        "name": "Mathias Brichta",
+        "title": "Business Analyst und Entwickler",
+        "description": "Mathias setzt sich dafür ein, Unternehmen beim Übergang ins digitale Zeitalter zu unterstützen, indem er ihre Bedürfnisse analysiert und effektive Lösungen entwickelt. Mit Erfahrung in der Entwicklung und einem scharfen Blick für Prozessoptimierung schlägt er die Brücke zwischen geschäftlichen Herausforderungen und technischen Lösungen."
+      }
+    ]
+  },
+  "howWeWork": {
+    "heading": "Wie wir arbeiten",
+    "subheading": "Bei Zadai.ai kombinieren wir Strategie und Technologie, um Ihre Prozesse zu optimieren.",
+    "ctaLabel": "Einen Anruf vereinbaren",
+    "steps": [
+      {
+        "title": "1. Abstimmen und Priorisieren",
+        "content": "Wir verstehen Ihre Bedürfnisse und Engpässe, um Prioritäten zu setzen.",
+        "dotPosition": "bottom"
+      },
+      {
+        "title": "2. Dokumentieren und Vereinheitlichen",
+        "content": "Wir kartieren Prozesse und zentralisieren Informationen für eine einzige Quelle der Wahrheit.",
+        "dotPosition": "top"
+      },
+      {
+        "title": "3. Automatisieren, Delegieren, Eliminieren",
+        "content": "Wir identifizieren Aufgaben, die automatisiert oder delegiert werden können, um die Effizienz zu steigern.",
+        "dotPosition": "bottom"
+      },
+      {
+        "title": "4. Implementieren und Wachsen!",
+        "content": "Wir schulen Ihr Team und überwachen den Start für nachhaltiges Wachstum.",
+        "dotPosition": "top"
+      }
+    ]
+  },
+  "contactSection": {
+    "heading": "Kontaktieren Sie uns",
+    "slogan": "Ihr Partner für digitale Lösungen",
+    "description": "Kontaktieren Sie uns, um zu besprechen, wie wir Ihrem Unternehmen helfen können, zu wachsen.",
+    "errorMessage": "Beim Laden der Dienste ist ein Fehler aufgetreten. Bitte versuchen Sie es später noch einmal."
+  },
+  "contact": {
+    "sectionTitle": "Kontaktieren Sie uns",
+    "form": {
+      "nameLabel": "Name",
+      "emailLabel": "E-Mail-Adresse",
+      "companyNameLabel": "Firmenname",
+      "servicesLabel": "Welche Dienstleistungen interessieren Sie?",
+      "messageLabel": "Nachricht",
+      "submitButton": "Senden"
+    }
+  },
+  "contactForm": {
+    "nameLabel": "Name",
+    "emailLabel": "E-Mail",
+    "companyNameLabel": "Wie heißt Ihr Unternehmen?",
+    "servicesLabel": "Welche Dienstleistungen interessieren Sie?",
+    "recaptchaLabel": "Ich bin kein Roboter",
+    "recaptchaMessage": "Bitte bestätigen Sie reCAPTCHA, bevor Sie absenden.",
+    "noServicesMessage": "Keine verfügbaren Dienste gefunden.",
+    "submitButton": "Absenden",
+    "submittingButton": "Wird gesendet...",
+    "successMessage": "Formular erfolgreich übermittelt!",
+    "errorMessage": "Beim Senden des Formulars ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut."
+  },
+  "footer": {
+    "logo": "Zadai.ai",
+    "navLinks": [
+      { "label": "Startseite", "href": "#" },
+      { "label": "Dienstleistungen", "href": "#services" },
+      { "label": "Über Uns", "href": "#team" }
+    ],
+    "socialLinks": {
+      "linkedIn": "https://linkedin.com/in/mathias-brichta",
+      "twitter": "https://twitter.com",
+      "instagram": "https://intagram.com/mathiasbrichta"
+    },
+    "legal": {
+      "copyright": "© 2024 Zadai.ai. Alle Rechte vorbehalten.",
+      "links": {
+        "privacyPolicy": "Datenschutzrichtlinie",
+        "termsOfService": "Nutzungsbedingungen",
+        "cookiesSettings": "Cookie-Einstellungen"
+      }
+    }
+  },
+  "contactPage": {
+    "workingTogether": "Lass uns zusammenarbeiten",
+    "contactUs": "Kontaktieren Sie uns",
+    "contactDescription": "Bitte füllen Sie das folgende Formular aus, und wir werden uns bei Ihnen melden.",
+    "name": "Name",
+    "email": "E-Mail",
+    "role": "Rolle",
+    "companyName": "Firmenname",
+    "companySize": "Firmengröße",
+    "annualRevenue": "Jahresumsatz",
+    "interestedServices": "Interessierte Dienstleistungen",
+    "recaptcha": "reCAPTCHA",
+    "notARobot": "Ich bin kein Roboter",
+    "submit": "Senden",
+    "requiredFieldsError": "Name, E-Mail und interessierte Dienstleistungen sind erforderlich.",
+    "placeholders": {
+      "name": "Geben Sie Ihren Namen ein",
+      "email": "Geben Sie Ihre E-Mail ein",
+      "role": "Geben Sie Ihre Rolle ein",
+      "companyName": "Geben Sie Ihren Firmennamen ein"
+    },
+    "companySizeOptions": [
+      "Weniger als 20",
+      "20 bis 200",
+      "201 bis 500",
+      "Mehr als 500"
+    ],
+    "annualRevenueOptions": [
+      "Weniger als 100k",
+      "100k bis 500k",
+      "500k bis 1 Mio.",
+      "Mehr als 1 Mio."
+    ],
+    "servicesOptions": {
+      "workflowAutomation": "Workflow-Automatisierung",
+      "aiAgentDevelopment": "KI-Agentenentwicklung",
+      "internalCustomTools": "Interne kundenspezifische Tools"
+    },
+    "recaptchaMessage": "Bitte bestätigen Sie, dass Sie kein Roboter sind.",
+    "successMessage": "Ihre Nachricht wurde erfolgreich gesendet!",
+    "errorMessage": "Beim Absenden des Formulars ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut."
+  }
+}
