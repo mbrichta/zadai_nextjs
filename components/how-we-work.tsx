@@ -12,8 +12,6 @@ function StepCard({ title, content, dotPosition }: Step) {
       ? "bottom-0 translate-y-6"
       : "top-0 -translate-y-6";
 
-  console.log({ dotPosition });
-
   return (
     <div className="relative p-4 border bg-white rounded shadow h-full ml-4">
       <h3 className="text-xl font-semibold mb-2">{title}</h3>
