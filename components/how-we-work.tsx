@@ -1,4 +1,5 @@
 import { dict } from "@/app/[lang]/page";
+import { cn } from "@/lib/utils";
 interface Step {
   title: string;
   content: string;
@@ -11,6 +12,8 @@ function StepCard({ title, content, dotPosition }: Step) {
       ? "bottom-0 translate-y-6"
       : "top-0 -translate-y-6";
 
+  console.log({ dotPosition });
+
   return (
     <div className="relative p-4 border bg-white rounded shadow h-full ml-4">
       <h3 className="text-xl font-semibold mb-2">{title}</h3>
@@ -19,7 +22,7 @@ function StepCard({ title, content, dotPosition }: Step) {
       {/* Dot for mobile */}
       <div
         className="
-          block lg:hidden
+          block md:hidden
           absolute
           w-4 h-4
           bg-primary
@@ -33,7 +36,7 @@ function StepCard({ title, content, dotPosition }: Step) {
       {/* Dot for large screens */}
       <div
         className={`
-          hidden lg:block 
+          hidden md:block 
           absolute 
           w-4 h-4 
           bg-primary 
@@ -46,7 +49,12 @@ function StepCard({ title, content, dotPosition }: Step) {
     </div>
   );
 }
-
+const colPos = [
+  "md:col-start-1",
+  "md:col-start-2",
+  "md:col-start-3",
+  "md:col-start-4",
+];
 export default function HowWeWork({ dictionary }: dict) {
   const { heading, subheading, steps, ctaLabel } = dictionary.howWeWork;
 
@@ -68,7 +76,7 @@ export default function HowWeWork({ dictionary }: dict) {
             w-[2px]
             bg-gray-300
             block
-            lg:hidden
+            md:hidden
             z-0
           "
         />
@@ -77,7 +85,7 @@ export default function HowWeWork({ dictionary }: dict) {
         <div
           className="
             hidden
-            lg:block
+            md:block
             absolute
             left-0
             w-full
@@ -88,13 +96,16 @@ export default function HowWeWork({ dictionary }: dict) {
           "
         />
 
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-4 lg:grid-rows-2 relative z-10">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-4 md:grid-rows-2 relative z-10">
           {steps.map((step: Step, index: number) => (
             <div
               key={index}
-              className={`lg:row-start-${
-                step.dotPosition === "top" ? 2 : 1
-              } lg:col-start-${index + 1}`}
+              className={cn(
+                step.dotPosition === "top"
+                  ? "md:row-start-2"
+                  : "md:row-start-1",
+                colPos[index]
+              )}
             >
               <StepCard {...step} />
             </div>
