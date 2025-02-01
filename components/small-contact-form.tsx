@@ -1,15 +1,15 @@
 "use client";
-
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { supabase } from "@/lib/supabase";
 import { Button } from "@/components/ui/button";
 import { services } from "./large-contact-form";
+import ReCAPTCHA from "react-google-recaptcha";
 
-interface dict {
+interface Dict {
   [key: string]: any;
 }
 interface ContactFormProps {
-  dictionary: dict;
+  dictionary: Dict;
 }
 
 export default function ContactFormSmall({ dictionary }: ContactFormProps) {
@@ -32,8 +32,9 @@ export default function ContactFormSmall({ dictionary }: ContactFormProps) {
     correo: "",
     nombreEmpresa: "",
     servicios: services.length > 0 ? services[0].value : "",
-    recaptchaConfirmado: false,
   });
+  const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
+  const recaptchaRef = useRef<ReCAPTCHA>(null);
 
   const [submitting, setSubmitting] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -45,11 +46,8 @@ export default function ContactFormSmall({ dictionary }: ContactFormProps) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleRecaptchaFakeToggle = () => {
-    setFormData((prev) => ({
-      ...prev,
-      recaptchaConfirmado: !prev.recaptchaConfirmado,
-    }));
+  const handleRecaptchaChange = (token: string | null) => {
+    setRecaptchaToken(token);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -57,7 +55,7 @@ export default function ContactFormSmall({ dictionary }: ContactFormProps) {
     setError(null);
     setSuccess(null);
 
-    if (!formData.recaptchaConfirmado) {
+    if (!recaptchaToken) {
       setError(recaptchaMessage);
       return;
     }
@@ -65,14 +63,24 @@ export default function ContactFormSmall({ dictionary }: ContactFormProps) {
     setSubmitting(true);
 
     try {
-      // Convert the selected service to English.
-      // Since the option values are already set to the English value,
-      // we verify by finding the matching entry.
+      const recaptchaResponse = await fetch("/api/verify-recaptcha", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token: recaptchaToken }),
+      });
+      const recaptchaResult = await recaptchaResponse.json();
+
+      if (!recaptchaResult.success) {
+        setError(recaptchaMessage);
+        setSubmitting(false);
+        return;
+      }
+
       const englishService =
         services.find((service) => service.value === formData.servicios)
           ?.value || formData.servicios;
 
-      const { error } = await supabase.from("contacts").insert([
+      const { error: supabaseError } = await supabase.from("contacts").insert([
         {
           name: formData.nombre,
           email: formData.correo,
@@ -81,48 +89,47 @@ export default function ContactFormSmall({ dictionary }: ContactFormProps) {
         },
       ]);
 
-      if (error) {
+      if (supabaseError) {
         setError(errorMessage);
-        console.error("Error submitting form:", error.message);
+        console.error("Error submitting form:", supabaseError.message);
+      } else {
+        setSuccess(successMessage);
+        setFormData({
+          nombre: "",
+          correo: "",
+          nombreEmpresa: "",
+          servicios: services.length > 0 ? services[0].value : "",
+        });
       }
-
-      setSuccess(successMessage);
-      setFormData({
-        nombre: "",
-        correo: "",
-        nombreEmpresa: "",
-        servicios: services.length > 0 ? services[0].value : "",
-        recaptchaConfirmado: false,
-      });
     } catch (err: any) {
       setError(errorMessage);
       console.error("Error submitting form:", err.message);
     } finally {
       setSubmitting(false);
+      if (recaptchaRef.current) {
+        recaptchaRef.current.reset();
+      }
+      setRecaptchaToken(null);
     }
   };
 
   return (
     <>
-      {/* Success Message */}
       {success && (
         <div className="mb-4 p-4 text-green-700 bg-green-100 border border-green-400 rounded">
           {success}
         </div>
       )}
 
-      {/* Error Message */}
       {error && (
         <div className="mb-4 p-4 text-red-700 bg-red-100 border border-red-400 rounded">
           {error}
         </div>
       )}
 
-      {/* Contact Form */}
       {!success && (
         <form onSubmit={handleSubmit} className="space-y-6 text-left">
           <div className="flex md:flex-row flex-col justify-center items-center gap-6 w-full">
-            {/* Nombre */}
             <div className="w-full">
               <label htmlFor="nombre" className="block font-semibold">
                 {nameLabel}
@@ -139,7 +146,6 @@ export default function ContactFormSmall({ dictionary }: ContactFormProps) {
               />
             </div>
 
-            {/* Correo */}
             <div className="w-full">
               <label htmlFor="correo" className="block font-semibold">
                 {emailLabel}
@@ -157,7 +163,6 @@ export default function ContactFormSmall({ dictionary }: ContactFormProps) {
             </div>
           </div>
 
-          {/* Nombre de la Empresa */}
           <div>
             <label htmlFor="nombreEmpresa" className="block mb-1 font-semibold">
               {companyNameLabel}
@@ -174,7 +179,6 @@ export default function ContactFormSmall({ dictionary }: ContactFormProps) {
             />
           </div>
 
-          {/* Servicios de Interés */}
           <div>
             <label htmlFor="servicios" className="block mb-1 font-semibold">
               {servicesLabel}
@@ -195,33 +199,21 @@ export default function ContactFormSmall({ dictionary }: ContactFormProps) {
                 ))}
               </select>
             ) : (
-              <p className="text-red-500">
-                {dictionary.contactForm.noServicesMessage}
-              </p>
+              <p className="text-red-500">{noServicesMessage}</p>
             )}
           </div>
 
-          {/* reCAPTCHA (Simulado) */}
           <div>
-            <label className="block mb-1 font-semibold">{recaptchaLabel}</label>
-            <div
-              className="border border-gray-400 rounded-md p-2 flex items-center justify-between cursor-pointer select-none focus:outline-none focus:border-gray-600"
-              onClick={handleRecaptchaFakeToggle}
-            >
-              <div className="flex items-center space-x-2">
-                <input
-                  type="checkbox"
-                  checked={formData.recaptchaConfirmado}
-                  onChange={handleRecaptchaFakeToggle}
-                  className="h-4 w-4 text-primary border-gray-300 rounded"
-                />
-                <span className="text-sm text-gray-700">{recaptchaLabel}</span>
-              </div>
-              <span className="text-gray-400 text-sm">reCAPTCHA</span>
-            </div>
+            <ReCAPTCHA
+              sitekey={
+                process.env.NEXT_PUBLIC_WEBSITE_SECRET_KEY ||
+                "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+              }
+              onChange={handleRecaptchaChange}
+              ref={recaptchaRef}
+            />
           </div>
 
-          {/* Submit Button */}
           <div className="text-center">
             <Button type="submit" disabled={submitting}>
               {submitting ? submittingButton : submitButton}

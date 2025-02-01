@@ -2,6 +2,8 @@ import * as React from "react";
 import { Instagram, LinkedinIcon } from "lucide-react";
 import { dict } from "@/app/[lang]/page";
 import Link from "next/link";
+import Image from "next/image";
+import logo_img from "public/images/logo.png";
 
 export function Footer({ dictionary }: { dictionary: dict }) {
   const { logo, navLinks, socialLinks, legal } = dictionary.footer;
@@ -14,9 +16,13 @@ export function Footer({ dictionary }: { dictionary: dict }) {
         <div className="flex-shrink-0">
           <Link
             href="/"
-            className="hover:text-[#8BA793]  text-[#8BA793]/70 text-xl font-semibold"
+            className="hover:text-[#8BA793] text-[#8BA793]/70 text-xl font-semibold"
           >
-            Zadai.ai
+            <Image
+              src={logo_img}
+              alt="Logo"
+              className="w-[100px] md:w-[130px]"
+            />
           </Link>
         </div>
 

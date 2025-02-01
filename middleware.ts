@@ -5,6 +5,10 @@ import { i18nConfig } from "./i18n-config";
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
+  if (pathname.startsWith("/api")) {
+    return NextResponse.next();
+  }
+
   if (
     pathname.startsWith(`/${defaultLocale}/`) ||
     pathname === `/${defaultLocale}`

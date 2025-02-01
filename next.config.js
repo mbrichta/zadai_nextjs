@@ -9,6 +9,7 @@ const nextConfig = {
     defaultLocale: "en",
     // optional: localeDetection: false,
   },
+  output: "standalone",
 };
 
 module.exports = nextConfig;

@@ -5,6 +5,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import logo from "public/images/logo.png";
+import Image from "next/image";
 
 // The dictionary now only needs text for navigation (not language codes)
 type NavbarDictionary = {
@@ -72,7 +74,7 @@ export function Navbar({ dictionary, lang }: NavbarProps) {
               href={`/${lang}`}
               className="hover:text-[#8BA793] text-[#8BA793]/70 text-xl font-semibold"
             >
-              Zadai.ai
+              <Image src={logo} alt="Logo" className="w-[100px] md:w-[130px]" />
             </Link>
           </div>
 

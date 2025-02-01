@@ -1,11 +1,9 @@
-// app/[lang]/ContactForm.tsx
-
 "use client";
-
 import { dict } from "@/app/[lang]/page";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/lib/supabase";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import ReCAPTCHA from "react-google-recaptcha";
 
 export const services = [
   { value: "workflow-automation", labelKey: "workflowAutomation" },
@@ -13,8 +11,6 @@ export const services = [
   { value: "internal-custom-tools", labelKey: "internalCustomTools" },
 ];
 
-// These maps ensure that the values stored in the database are in English,
-// regardless of the current language of the UI.
 const translateCompanySize: Record<string, string> = {
   "menos-20": "Less than 20",
   "20-200": "20 to 200",
@@ -30,6 +26,9 @@ const translateAnnualRevenue: Record<string, string> = {
 };
 
 export default function ContactForm({ dict }: dict) {
+  const recaptchaRef = useRef<ReCAPTCHA>(null);
+  const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
+
   const [submitting, setSubmitting] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
@@ -44,11 +43,14 @@ export default function ContactForm({ dict }: dict) {
     recaptchaConfirmado: false,
   });
 
-  // Friendly messages – you can also define these in your translation file.
   const recaptchaMessage = dict.contactPage.recaptchaMessage;
-  const requiredFieldsError = dict.contactPage.requiredFieldsError; // e.g., "Name, Email, and Interested Services are required."
+  const requiredFieldsError = dict.contactPage.requiredFieldsError;
   const successMessage = dict.contactPage.successMessage;
   const errorMessage = dict.contactPage.errorMessage;
+
+  const handleRecaptchaChange = (token: string | null) => {
+    setRecaptchaToken(token);
+  };
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -56,25 +58,16 @@ export default function ContactForm({ dict }: dict) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleRecaptchaFakeToggle = () => {
-    setFormData((prev) => ({
-      ...prev,
-      recaptchaConfirmado: !prev.recaptchaConfirmado,
-    }));
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
     setSuccess(null);
 
-    // Check recaptcha
-    if (!formData.recaptchaConfirmado) {
+    if (!recaptchaToken) {
       setError(recaptchaMessage);
       return;
     }
 
-    // Ensure required fields are not empty.
     if (!formData.nombre || !formData.correo || !formData.servicios) {
       setError(requiredFieldsError);
       return;
@@ -83,13 +76,23 @@ export default function ContactForm({ dict }: dict) {
     setSubmitting(true);
 
     try {
-      // Convert the selected service to its English value.
+      const recaptchaResponse = await fetch("/api/verify-recaptcha", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token: recaptchaToken }),
+      });
+      const recaptchaResult = await recaptchaResponse.json();
+
+      if (!recaptchaResult.success) {
+        setError(recaptchaMessage);
+        setSubmitting(false);
+        return;
+      }
+
       const englishService =
         services.find((service) => service.value === formData.servicios)
           ?.value || formData.servicios;
 
-      // Insert all properties into the "contacts" table.
-      // The company size and annual revenue are translated to English.
       const { error } = await supabase.from("contacts").insert([
         {
           name: formData.nombre,
@@ -138,14 +141,12 @@ export default function ContactForm({ dict }: dict) {
           {dict.contactPage.contactDescription}
         </p>
 
-        {/* Success Message */}
         {success && (
           <div className="mb-4 p-4 text-green-700 bg-green-100 border border-green-400 rounded">
             {success}
           </div>
         )}
 
-        {/* Error Message */}
         {error && (
           <div className="mb-4 p-4 text-red-700 bg-red-100 border border-red-400 rounded">
             {error}
@@ -155,7 +156,6 @@ export default function ContactForm({ dict }: dict) {
         {!success && (
           <form onSubmit={handleSubmit} className="space-y-6 text-left">
             <div className="flex md:flex-row flex-col justify-center items-center gap-6 w-full">
-              {/* Nombre */}
               <div className="w-full">
                 <label htmlFor="nombre" className="block font-semibold">
                   {dict.contactPage.name}
@@ -172,7 +172,6 @@ export default function ContactForm({ dict }: dict) {
                 />
               </div>
 
-              {/* Correo */}
               <div className="w-full">
                 <label htmlFor="correo" className="block font-semibold">
                   {dict.contactPage.email}
@@ -190,7 +189,6 @@ export default function ContactForm({ dict }: dict) {
               </div>
             </div>
 
-            {/* Rol */}
             <div>
               <label htmlFor="rol" className="block mb-1 font-semibold">
                 {dict.contactPage.role}
@@ -206,7 +204,6 @@ export default function ContactForm({ dict }: dict) {
               />
             </div>
 
-            {/* Nombre de la Empresa */}
             <div>
               <label
                 htmlFor="nombreEmpresa"
@@ -225,7 +222,6 @@ export default function ContactForm({ dict }: dict) {
               />
             </div>
 
-            {/* Tamaño de la Empresa */}
             <div>
               <label
                 htmlFor="tamanoEmpresa"
@@ -262,7 +258,6 @@ export default function ContactForm({ dict }: dict) {
               </select>
             </div>
 
-            {/* Ingresos Anuales */}
             <div>
               <label
                 htmlFor="ingresosAnuales"
@@ -299,7 +294,6 @@ export default function ContactForm({ dict }: dict) {
               </select>
             </div>
 
-            {/* Servicios Interesados */}
             <div>
               <label htmlFor="servicios" className="block mb-1 font-semibold">
                 {dict.contactPage.interestedServices}
@@ -320,33 +314,17 @@ export default function ContactForm({ dict }: dict) {
               </select>
             </div>
 
-            {/* reCAPTCHA (Simulado) */}
             <div>
-              <label className="block mb-1 font-semibold">
-                {dict.contactPage.recaptcha}
-              </label>
-              <div
-                className="border border-gray-400 rounded-md p-2 flex items-center justify-between cursor-pointer select-none focus:outline-none focus:border-gray-600"
-                onClick={handleRecaptchaFakeToggle}
-              >
-                <div className="flex items-center space-x-2">
-                  <input
-                    type="checkbox"
-                    checked={formData.recaptchaConfirmado}
-                    onChange={handleRecaptchaFakeToggle}
-                    className="h-4 w-4 text-primary border-gray-300 rounded"
-                  />
-                  <span className="text-sm text-gray-700">
-                    {dict.contactPage.notARobot}
-                  </span>
-                </div>
-                <span className="text-gray-400 text-sm">
-                  {dict.contactPage.recaptcha}
-                </span>
-              </div>
+              <ReCAPTCHA
+                sitekey={
+                  process.env.NEXT_PUBLIC_WEBSITE_SECRET_KEY ||
+                  "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+                }
+                onChange={handleRecaptchaChange}
+                ref={recaptchaRef}
+              />
             </div>
 
-            {/* Botón de Envío */}
             <div className="text-center">
               <Button type="submit" disabled={submitting}>
                 {submitting ? "Submitting..." : dict.contactPage.submit}
