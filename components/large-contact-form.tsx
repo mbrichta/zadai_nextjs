@@ -64,7 +64,6 @@ export default function ContactForm({ dict }: dict) {
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    console.log({ formData });
     e.preventDefault();
     setError(null);
     setSuccess(null);

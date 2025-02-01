@@ -9,10 +9,7 @@ interface PageProps {
 
 export default async function Page({ params }: PageProps) {
   const lang = params.lang;
-  console.log({ lang });
-
   const dict = await getDictionary(lang);
-  console.log({ dict });
 
   return <ContactForm dict={dict} />;
 }

@@ -10,7 +10,5 @@ const dictionaries: any = {
 };
 
 export const getDictionary = async (locale: string) => {
-  console.log({ dictionaries: dictionaries[locale] });
-
   return dictionaries[locale]();
 };

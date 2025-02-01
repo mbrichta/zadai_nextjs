@@ -17,10 +17,7 @@ export default async function ({
   params: Promise<{ lang: string }>;
 }) {
   const lang = (await params).lang;
-  console.log({ lang });
-
   const dict: dict = await getDictionary(lang);
-  console.log({ dict });
 
   return (
     <div className="min-h-screen bg-background">

@@ -5,17 +5,10 @@ import { i18nConfig } from "./i18n-config";
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Log the incoming request path right away
-  console.log("[middleware] Incoming request:", pathname);
-
-  // --- Example: check if path starts with /en (default locale) ---
   if (
     pathname.startsWith(`/${defaultLocale}/`) ||
     pathname === `/${defaultLocale}`
   ) {
-    console.log(
-      `[middleware] Detected default locale in path; rewriting to root`
-    );
     return NextResponse.redirect(
       new URL(
         pathname.replace(
@@ -27,19 +20,11 @@ export function middleware(request: NextRequest) {
     );
   }
 
-  // --- Example: check if the pathname has any known locale at the start ---
   const pathnameIsMissingLocale = i18nConfig.locales.every(
     (locale) => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`
   );
-  console.log(
-    "[middleware] pathnameIsMissingLocale =",
-    pathnameIsMissingLocale
-  );
 
   if (pathnameIsMissingLocale) {
-    console.log(
-      `[middleware] Missing locale, rewriting to /${defaultLocale}${pathname}`
-    );
     return NextResponse.rewrite(
       new URL(
         `/${defaultLocale}${pathname}${request.nextUrl.search}`,
@@ -48,10 +33,6 @@ export function middleware(request: NextRequest) {
     );
   }
 
-  // If none of the above conditions apply, just return NextResponse.next()
-  console.log(
-    "[middleware] No rewrites/redirects, letting request pass through"
-  );
   return NextResponse.next();
 }
 

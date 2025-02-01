@@ -82,9 +82,8 @@ export default function ContactFormSmall({ dictionary }: ContactFormProps) {
       ]);
 
       if (error) {
-        // Log the raw error for debugging.
+        setError(errorMessage);
         console.error("Error submitting form:", error.message);
-        throw new Error();
       }
 
       setSuccess(successMessage);
