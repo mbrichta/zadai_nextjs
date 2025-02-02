@@ -27,19 +27,19 @@ export function Services({ dictionary }: ServicesProps) {
     <section id="services" className="py-20 bg-background">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section heading */}
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-16 text-[#0B3B5B]">
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-16 text-primary">
           {heading}
         </h2>
 
         {/* Services grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mx-auto">
           {items.map(
             (item: { title: string; description: string }, index: number) => {
               const Icon = ICONS[index % ICONS.length]; // Rotate through icons
               return (
                 <Card
                   key={item.title}
-                  className={`bg-[#0B3B5B] text-white hover:bg-[#0B3B5B]/90 transition-colors ${
+                  className={`bg-primary text-white hover:bg-primary/90 transition-colors ${
                     index === 0 ? "lg:col-span-2" : ""
                   }`}
                 >

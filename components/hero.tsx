@@ -14,9 +14,9 @@ export function Hero({ dictionary }: HeroProps) {
 
   return (
     <section className="relative py-20 lg:py-32 overflow-hidden">
-      <div className="container mx-auto px-4 xl:px-8">
+      <div className="max-w-6xl mx-auto px-4 xl:px-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-12 items-center">
-          <div className="max-w-2xl">
+          <div className="max-w-2xl lg:pl-6">
             <h1 className="text-4xl lg:text-5xl font-bold tracking-tight">
               <span className="block text-[#8BA793] font-bold mb-2 sm:whitespace-nowrap">
                 {headingPart1}
@@ -42,7 +42,13 @@ export function Hero({ dictionary }: HeroProps) {
             </div>
           </div>
 
-          <Image src={heroPng} alt="Hero" width={500} height={500} />
+          <Image
+            src={heroPng}
+            alt="Hero"
+            width={450}
+            height={450}
+            className="mx-auto"
+          />
         </div>
       </div>
     </section>
