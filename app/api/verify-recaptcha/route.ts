@@ -12,10 +12,7 @@ export async function POST(request: Request) {
   try {
     const { token } = await request.json();
 
-    const secretKey =
-      process.env.NODE_ENV === "development"
-        ? "6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe"
-        : process.env.RECAPTCHA_SECRET_KEY;
+    const secretKey = process.env.NEXT_PUBLIC_CAPTCHA_SECRET_KEY;
 
     const response = await axios.post(
       `https://www.google.com/recaptcha/api/siteverify`,
