@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Navbar } from "@/components/navbar";
 import { getDictionary } from "./dictionaries";
+import { Analytics } from "@vercel/analytics/next";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -32,6 +33,7 @@ export default async function RootLayout({
           <Navbar dictionary={dict} lang={lang} />
           <main className="pt-16">{children}</main>
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );
