@@ -6,8 +6,12 @@ import {
   Network,
   Workflow,
 } from 'lucide-react'
-import { useEffect, useRef } from 'react'
-import { cn } from '@/lib/utils'
+
+import { Container } from '@/components/marketing/container'
+import { Section, SectionHeader } from '@/components/marketing/section-header'
+import { Badge } from '@/components/ui/badge'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import type { dict } from '@/types/dictionary'
 
 type HowItWorksProps = {
@@ -15,152 +19,104 @@ type HowItWorksProps = {
 }
 
 const ICONS = [FileText, Cloud, Network, Database, Workflow, Brain]
-const IMAGES = [
-  '/images/phase1.svg',
-  '/images/phase2.svg',
-  '/images/phase3.svg',
-  '/images/phase4.svg',
-  '/images/phase5.svg',
-  '/images/phase6.svg',
-]
 
 export function HowItWorks({ dictionary }: HowItWorksProps) {
   const howItWorks = dictionary.howItWorks as {
     heading: string
+    eyebrow: string
     description: string
     phases: { title: string; points: string[] }[]
   }
-  const { heading, description, phases } = howItWorks
-
-  const observerRefs = useRef<(HTMLDivElement | null)[]>([])
-
-  useEffect(() => {
-    const observers = observerRefs.current.map((ref) => {
-      if (!ref) return null
-
-      const observer = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) {
-            ref.classList.add('is-visible')
-          } else {
-            ref.classList.remove('is-visible')
-          }
-        },
-        {
-          threshold: 0.3,
-          rootMargin: '-20% 0px -20% 0px',
-        },
-      )
-
-      observer.observe(ref)
-      return observer
-    })
-
-    return () => {
-      for (const observer of observers) {
-        observer?.disconnect()
-      }
-    }
-  }, [])
+  const { heading, eyebrow, description, phases } = howItWorks
 
   return (
-    <section className="bg-background relative py-40">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
-        <div className="flex flex-col items-center pb-20 gap-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-[#0B3B5B] text-center">
-            {heading}
-          </h2>
-          <p className="text-xs md:text-sm text-center">{description}</p>
+    <Section className="bg-muted/35">
+      <Container>
+        <SectionHeader
+          eyebrow={eyebrow}
+          title={heading}
+          description={description}
+        />
+
+        {/* Desktop timeline */}
+        <div className="hidden border border-border bg-card md:block">
+          {phases.map((phase, index) => {
+            const Icon = ICONS[index % ICONS.length]
+            return (
+              <Card
+                key={phase.title}
+                className="-m-px rounded-none border-border"
+              >
+                <CardHeader className="grid grid-cols-[88px_1fr] gap-6 space-y-0">
+                  <div>
+                    <Badge
+                      variant="outline"
+                      className="rounded-md font-mono text-[11px]"
+                    >
+                      phase {index + 1}
+                    </Badge>
+                  </div>
+                  <div>
+                    <div className="mb-3 flex items-center gap-2">
+                      <Icon className="size-5 text-accent" />
+                      <CardTitle className="text-lg">{phase.title}</CardTitle>
+                    </div>
+                    <ul className="grid gap-2 text-sm text-muted-foreground lg:grid-cols-2">
+                      {phase.points.map((point) => (
+                        <li key={point} className="flex gap-2 leading-relaxed">
+                          <span className="mt-2 size-1.5 shrink-0 rounded-full bg-accent" />
+                          {point}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </CardHeader>
+              </Card>
+            )
+          })}
         </div>
 
-        <div className="relative">
-          <div className="absolute left-2 md:left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-[#0B3B5B]/20" />
-
-          <div className="space-y-40">
+        {/* Mobile tabs */}
+        <div className="md:hidden">
+          <Tabs defaultValue="0">
+            <TabsList className="mb-4 flex h-auto w-full flex-wrap">
+              {phases.map((phase, index) => (
+                <TabsTrigger
+                  key={phase.title}
+                  value={String(index)}
+                  className="text-xs"
+                >
+                  {index + 1}
+                </TabsTrigger>
+              ))}
+            </TabsList>
             {phases.map((phase, index) => {
               const Icon = ICONS[index % ICONS.length]
-              const imageSrc = IMAGES[index % IMAGES.length]
-              const isEven = index % 2 === 0
-
               return (
-                <div
-                  key={phase.title}
-                  ref={(el) => {
-                    observerRefs.current[index] = el
-                  }}
-                  className={cn(
-                    'flex flex-col md:flex-row relative opacity-0 translate-y-8',
-                    'transition-all duration-700 ease-out',
-                    'is-visible:opacity-100 is-visible:translate-y-0',
-                  )}
-                >
-                  <div
-                    className={cn(
-                      'w-full md:w-1/2 px-4',
-                      isEven ? 'md:order-1' : 'md:order-2',
-                    )}
-                  >
-                    <div
-                      className={cn(isEven ? 'translate-x-4' : 'translate-x-8')}
-                    >
-                      <img
-                        src={imageSrc}
-                        alt={phase.title}
-                        width={300}
-                        height={300}
-                      />
-                    </div>
-                  </div>
-
-                  <div
-                    className={cn(
-                      'w-full md:w-1/2 px-4 mt-8 md:mt-0',
-                      isEven ? 'md:order-2' : 'md:order-1',
-                    )}
-                  >
-                    <div
-                      className={cn(
-                        'flex items-center mb-4',
-                        !isEven ? 'md:justify-end' : 'md:justify-start',
-                      )}
-                    >
-                      <div className="flex items-center justify-center w-10 h-10 rounded-full bg-[#0B3B5B] text-white text-lg font-semibold relative z-10 transition-transform duration-500">
-                        {index}
-                      </div>
-                    </div>
-
-                    <div>
-                      <div className={cn('flex items-start space-x-4 mb-4')}>
-                        <Icon className="h-8 w-8 text-[#0B3B5B] transition-transform duration-500" />
-                        <h3 className="text-xl font-semibold text-[#0B3B5B]">
+                <TabsContent key={phase.title} value={String(index)}>
+                  <Card className="border-border">
+                    <CardHeader>
+                      <div className="flex items-center gap-2">
+                        <Icon className="size-5 text-accent" />
+                        <CardTitle className="text-base">
                           {phase.title}
-                        </h3>
+                        </CardTitle>
                       </div>
-                      <ul className="space-y-4 text-muted-foreground">
-                        {phase.points.map((point, i) => (
-                          <li
-                            key={i}
-                            className="transition-all duration-500 opacity-0 transform translate-x-[-20px] is-visible:opacity-100 is-visible:translate-x-0"
-                            style={{
-                              transitionDelay: `${i * 150}ms`,
-                            }}
-                          >
-                            {point}
-                          </li>
+                    </CardHeader>
+                    <CardContent>
+                      <ul className="space-y-2 text-sm text-muted-foreground">
+                        {phase.points.map((point) => (
+                          <li key={point}>{point}</li>
                         ))}
                       </ul>
-                    </div>
-                  </div>
-
-                  <div className="absolute left-1/2 transform -translate-x-1/2">
-                    <div className="w-4 h-4 bg-[#0B3B5B] rounded-full hidden md:block" />
-                  </div>
-                </div>
+                    </CardContent>
+                  </Card>
+                </TabsContent>
               )
             })}
-          </div>
+          </Tabs>
         </div>
-      </div>
-    </section>
+      </Container>
+    </Section>
   )
 }

@@ -1,20 +1,33 @@
-import { useState } from 'react'
 import { Link, useLocation } from '@tanstack/react-router'
-import { Menu, X, Globe } from 'lucide-react'
+import { Globe, Menu } from 'lucide-react'
+
+import ThemeToggle from '@/components/ThemeToggle'
+import { Container } from '@/components/marketing/container'
 import { Button } from '@/components/ui/button'
 import {
-  type Locale,
-} from '@/lib/i18n/config'
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from '@/components/ui/sheet'
+import type { Locale } from '@/lib/i18n/config'
 import { localePath, switchLocalePath } from '@/lib/i18n/paths'
 
 type NavbarDictionary = {
   nav: {
+    brandName: string
     items: {
       home: string
       services: string
-      aboutUs: string
+      aboutMe: string
       howWeWork: string
-      blog: string
       contactUs: string
     }
     scheduleCallLabel: string
@@ -28,217 +41,167 @@ type NavbarProps = {
   lang: Locale
 }
 
-const LANG_OPTIONS: { code: Locale; emoji: string }[] = [
-  { code: 'en-US', emoji: '🇺🇸' },
-  { code: 'de-DE', emoji: '🇩🇪' },
-  { code: 'es-ES', emoji: '🇪🇸' },
+const LANG_OPTIONS: { code: Locale; label: string }[] = [
+  { code: 'en-US', label: 'English' },
+  { code: 'de-DE', label: 'Deutsch' },
+  { code: 'es-ES', label: 'Español' },
 ]
 
 const NAV_LINKS = [
   { labelKey: 'home', href: '/' },
   { labelKey: 'services', href: '#services' },
-  { labelKey: 'aboutUs', href: '#team' },
+  { labelKey: 'aboutMe', href: '#about' },
   { labelKey: 'howWeWork', href: '#how-we-work' },
   { labelKey: 'contactUs', href: '/contact' },
 ] as const
 
-export function Navbar({ dictionary, lang }: NavbarProps) {
-  const [isOpen, setIsOpen] = useState(false)
-  const [langDropdownOpen, setLangDropdownOpen] = useState(false)
-  const { pathname } = useLocation()
+const CALENDLY_URL = 'https://calendly.com/28mathias23/llamada-60min'
 
-  const getLocalizedPath = (code: Locale) => switchLocalePath(pathname, code)
+function NavLink({
+  href,
+  label,
+  lang,
+  onClick,
+  className,
+}: {
+  href: string
+  label: string
+  lang: Locale
+  onClick?: () => void
+  className?: string
+}) {
+  const resolved = href.startsWith('#') ? href : localePath(lang, href)
 
-  const { items, scheduleCallLabel, openMenuLabel, languageSwitcherLabel } =
-    dictionary.nav
-
-  const navHref = (href: string) => {
-    if (href.startsWith('#')) return href
-    return localePath(lang, href)
+  if (href.startsWith('#')) {
+    return (
+      <a href={resolved} onClick={onClick} className={className}>
+        {label}
+      </a>
+    )
   }
 
   return (
-    <nav className="fixed w-full bg-primary supports-[backdrop-filter]:bg-primary z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center h-16">
-          <div className="flex-shrink-0">
-            <Link
-              to={localePath(lang, '/')}
-              className="hover:text-[#8BA793] text-[#8BA793]/70 text-xl font-semibold"
-            >
-              <img
-                src="/images/logo.png"
-                alt="Logo"
-                className="w-[100px] md:w-[130px]"
-              />
-            </Link>
-          </div>
+    <Link to={resolved} onClick={onClick} className={className}>
+      {label}
+    </Link>
+  )
+}
 
-          <div className="hidden md:flex md:items-center md:space-x-8 flex-1 ml-8 sm:text-sm justify-end mr-4">
-            {NAV_LINKS.map((navItem) => {
-              const label = items[navItem.labelKey]
-              const href = navHref(navItem.href)
-              if (href.startsWith('#')) {
-                return (
-                  <a
-                    key={navItem.labelKey}
-                    href={href}
-                    className="text-primary-foreground/60 hover:text-primary-foreground transition-colors"
-                  >
-                    {label}
-                  </a>
-                )
-              }
-              return (
-                <Link
-                  key={navItem.labelKey}
-                  to={href}
-                  className="text-primary-foreground/60 hover:text-primary-foreground transition-colors"
+export function Navbar({ dictionary, lang }: NavbarProps) {
+  const { pathname } = useLocation()
+  const {
+    brandName,
+    items,
+    scheduleCallLabel,
+    openMenuLabel,
+    languageSwitcherLabel,
+  } = dictionary.nav
+
+  const getLocalizedPath = (code: Locale) => switchLocalePath(pathname, code)
+
+  const linkClass =
+    'text-sm font-medium text-muted-foreground transition-colors hover:text-foreground'
+
+  return (
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-border bg-background/95 backdrop-blur-sm">
+      <Container size="wide">
+        <div className="flex h-16 items-center gap-4">
+          <Link
+            to={localePath(lang, '/')}
+            className="flex items-center gap-2 text-sm font-semibold tracking-tight text-foreground"
+          >
+            <span className="flex size-7 items-center justify-center rounded-md border border-foreground/15 bg-foreground text-[11px] font-semibold text-background">
+              MB
+            </span>
+            <span>{brandName}</span>
+          </Link>
+
+          <nav className="ml-auto hidden items-center gap-1 md:flex">
+            {NAV_LINKS.map((navItem) => (
+              <Button key={navItem.labelKey} variant="ghost" size="sm" asChild>
+                <NavLink
+                  href={navItem.href}
+                  label={items[navItem.labelKey]}
+                  lang={lang}
+                  className={linkClass}
+                />
+              </Button>
+            ))}
+          </nav>
+
+          <div className="ml-auto flex items-center gap-2 md:ml-0">
+            <ThemeToggle />
+
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  aria-label={languageSwitcherLabel}
                 >
-                  {label}
-                </Link>
-              )
-            })}
-          </div>
+                  <Globe className="size-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                {LANG_OPTIONS.map(({ code, label }) => (
+                  <DropdownMenuItem key={code} asChild>
+                    <Link to={getLocalizedPath(code)}>{label}</Link>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
 
-          <div className="hidden md:flex items-center space-x-4 ml-auto">
-            <Button
-              variant="secondary"
-              className="bg-[#8BA793] text-white hover:bg-[#8BA793]/70"
-              asChild
-            >
-              <a
-                href="https://calendly.com/28mathias23/llamada-60min"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+            <Button className="hidden md:inline-flex" asChild>
+              <a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer">
                 {scheduleCallLabel}
               </a>
             </Button>
 
-            <div className="relative">
-              <button
-                type="button"
-                onClick={() => setLangDropdownOpen(!langDropdownOpen)}
-                className="p-2 text-primary-foreground/60 hover:text-primary-foreground transition-colors focus:outline-none focus:ring-2 focus:ring-primary rounded-full"
-                aria-label={languageSwitcherLabel}
-              >
-                <Globe className="w-5 h-5" />
-              </button>
-              {langDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-20 bg-white shadow-lg border rounded">
-                  {LANG_OPTIONS.map(({ code, emoji }) => (
-                    <Link
-                      key={code}
-                      to={getLocalizedPath(code)}
-                      className="flex items-center justify-center px-3 py-2 text-xl hover:bg-gray-100"
-                      onClick={() => setLangDropdownOpen(false)}
-                    >
-                      {emoji}
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
-
-          <div className="md:hidden ml-auto">
-            <button
-              type="button"
-              onClick={() => setIsOpen(!isOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md text-foreground hover:text-primary hover:bg-primary/10 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary"
-            >
-              <span className="sr-only">{openMenuLabel}</span>
-              {isOpen ? (
-                <X
-                  className="block h-6 w-6 text-primary-foreground/60"
-                  aria-hidden="true"
-                />
-              ) : (
-                <Menu
-                  className="block h-6 w-6 text-primary-foreground/60"
-                  aria-hidden="true"
-                />
-              )}
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <div className={`md:hidden ${isOpen ? 'block' : 'hidden'}`}>
-        <div className="px-2 pt-2 pb-3 space-y-1 bg-primary border-b">
-          {NAV_LINKS.map((navItem) => {
-            const label = items[navItem.labelKey]
-            const href = navHref(navItem.href)
-            if (href.startsWith('#')) {
-              return (
-                <a
-                  key={navItem.labelKey}
-                  href={href}
-                  className="block px-3 py-2 text-base font-medium text-primary-foreground/60 hover:text-primary-foreground hover:bg-primary/10 rounded-md"
-                  onClick={() => setIsOpen(false)}
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="md:hidden"
+                  aria-label={openMenuLabel}
                 >
-                  {label}
-                </a>
-              )
-            }
-            return (
-              <Link
-                key={navItem.labelKey}
-                to={href}
-                className="block px-3 py-2 text-base font-medium text-primary-foreground/60 hover:text-primary-foreground hover:bg-primary/10 rounded-md"
-                onClick={() => setIsOpen(false)}
-              >
-                {label}
-              </Link>
-            )
-          })}
-
-          <Button
-            variant="secondary"
-            className="w-full bg-[#8BA793] text-white hover:bg-[#8BA793]/70"
-            asChild
-          >
-            <a
-              href="https://calendly.com/28mathias23/llamada-60min"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-3 py-2 block text-center"
-              onClick={() => setIsOpen(false)}
-            >
-              {scheduleCallLabel}
-            </a>
-          </Button>
-
-          <div className="relative px-3 py-2 flex justify-center">
-            <button
-              type="button"
-              onClick={() => setLangDropdownOpen(!langDropdownOpen)}
-              className="p-2 text-primary-foreground/60 hover:text-primary-foreground transition-colors focus:outline-none focus:ring-2 focus:ring-primary rounded-full"
-              aria-label={languageSwitcherLabel}
-            >
-              <Globe className="w-5 h-5" />
-            </button>
-            {langDropdownOpen && (
-              <div className="absolute left-1/2 -translate-x-1/2 mt-2 w-20 bg-white shadow-lg border rounded">
-                {LANG_OPTIONS.map(({ code, emoji }) => (
-                  <Link
-                    key={code}
-                    to={getLocalizedPath(code)}
-                    className="flex items-center justify-center px-3 py-2 text-xl hover:bg-gray-100"
-                    onClick={() => {
-                      setLangDropdownOpen(false)
-                      setIsOpen(false)
-                    }}
-                  >
-                    {emoji}
-                  </Link>
-                ))}
-              </div>
-            )}
+                  <Menu className="size-5" />
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="right" className="w-full sm:max-w-sm">
+                <SheetHeader>
+                  <SheetTitle>{brandName}</SheetTitle>
+                </SheetHeader>
+                <nav className="mt-6 flex flex-col gap-2">
+                  {NAV_LINKS.map((navItem) => (
+                    <Button
+                      key={navItem.labelKey}
+                      variant="ghost"
+                      className="justify-start"
+                      asChild
+                    >
+                      <NavLink
+                        href={navItem.href}
+                        label={items[navItem.labelKey]}
+                        lang={lang}
+                      />
+                    </Button>
+                  ))}
+                  <Button className="mt-4" asChild>
+                    <a
+                      href={CALENDLY_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {scheduleCallLabel}
+                    </a>
+                  </Button>
+                </nav>
+              </SheetContent>
+            </Sheet>
           </div>
         </div>
-      </div>
-    </nav>
+      </Container>
+    </header>
   )
 }

@@ -1,9 +1,15 @@
-import { Instagram, LinkedinIcon } from 'lucide-react'
 import { Link } from '@tanstack/react-router'
+import { Instagram, LinkedinIcon } from 'lucide-react'
+
+import { Container } from '@/components/marketing/container'
+import { Button } from '@/components/ui/button'
+import { Separator } from '@/components/ui/separator'
 import type { dict } from '@/types/dictionary'
 
 export function Footer({ dictionary }: { dictionary: dict }) {
   const footer = dictionary.footer as {
+    brandName: string
+    tagline: string
     navLinks: { href: string; label: string }[]
     socialLinks: { linkedIn: string; instagram: string }
     legal: {
@@ -15,71 +21,74 @@ export function Footer({ dictionary }: { dictionary: dict }) {
       }
     }
   }
-  const { navLinks, socialLinks, legal } = footer
+  const { brandName, tagline, navLinks, socialLinks, legal } = footer
 
   return (
-    <footer className="w-full border-t bg-primary py-8 text-white">
-      <div className="container mx-auto flex flex-col items-center justify-between px-4 md:flex-row">
-        <div className="flex-shrink-0">
-          <Link
-            to="/"
-            className="hover:text-[#8BA793] text-[#8BA793]/70 text-xl font-semibold"
-          >
-            <img
-              src="/images/logo.png"
-              alt="Logo"
-              className="w-[100px] md:w-[130px]"
-            />
-          </Link>
-        </div>
-
-        <nav className="mb-4 md:mb-0">
-          <ul className="flex flex-wrap items-center justify-center space-x-4 text-sm">
-            {navLinks.map((link, index) => (
-              <li key={index}>
+    <footer className="bg-background">
+      <Container size="wide" className="py-12">
+        <div className="flex flex-col gap-8 md:flex-row md:items-start md:justify-between">
+          <div className="max-w-sm space-y-3">
+            <Link
+              to="/"
+              className="flex items-center gap-2 text-sm font-semibold text-foreground"
+            >
+              <span className="flex size-7 items-center justify-center rounded-md border border-foreground/15 bg-foreground text-[11px] font-semibold text-background">
+                MB
+              </span>
+              {brandName}
+            </Link>
+            <p className="text-sm leading-6 text-muted-foreground">{tagline}</p>
+            <div className="flex gap-2 pt-2">
+              <Button variant="ghost" size="icon" asChild>
                 <a
-                  href={link.href}
-                  className="text-gray-300 transition-colors duration-200 hover:text-gray-100"
+                  href={socialLinks.linkedIn}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="LinkedIn"
                 >
-                  {link.label}
+                  <LinkedinIcon className="size-4" />
                 </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
+              </Button>
+              <Button variant="ghost" size="icon" asChild>
+                <a
+                  href={socialLinks.instagram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Instagram"
+                >
+                  <Instagram className="size-4" />
+                </a>
+              </Button>
+            </div>
+          </div>
 
-        <div className="flex space-x-3">
-          <a
-            href={socialLinks.linkedIn}
-            className="text-gray-300 transition-colors duration-200 hover:text-white"
-          >
-            <LinkedinIcon className="h-5 w-5" />
-          </a>
-          <a
-            href={socialLinks.instagram}
-            className="text-gray-300 transition-colors duration-200 hover:text-white"
-          >
-            <Instagram className="h-5 w-5" />
-          </a>
+          <nav className="md:pt-1">
+            <ul className="flex flex-wrap gap-x-5 gap-y-2">
+              {navLinks.map((link) => (
+                <li key={link.label}>
+                  <a
+                    href={link.href}
+                    className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
         </div>
-      </div>
 
-      <div className="container mx-auto mt-6 px-4 text-center text-sm text-gray-400">
-        <p className="mb-2 md:mb-1">{legal.copyright}</p>
-        <div className="space-x-2">
-          <a href="#" className="transition-colors hover:text-gray-200">
-            {legal.links.privacyPolicy}
-          </a>
-          <span className="mx-1">|</span>
-          <a href="#" className="transition-colors hover:text-gray-200">
-            {legal.links.termsOfService}
-          </a>
-          <span className="mx-1">|</span>
-          <a href="#" className="transition-colors hover:text-gray-200">
-            {legal.links.cookiesSettings}
-          </a>
+        <Separator className="my-8" />
+
+        <div className="flex flex-col items-center justify-between gap-4 text-center md:flex-row md:text-left">
+          <p className="text-sm text-muted-foreground">{legal.copyright}</p>
+          <div className="flex flex-wrap justify-center gap-x-4 gap-y-1 text-sm text-muted-foreground">
+            <span>{legal.links.privacyPolicy}</span>
+            <span>{legal.links.termsOfService}</span>
+            <span>{legal.links.cookiesSettings}</span>
+          </div>
         </div>
-      </div>
+      </Container>
     </footer>
   )
 }

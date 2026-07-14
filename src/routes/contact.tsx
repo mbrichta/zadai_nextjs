@@ -1,7 +1,7 @@
-import { createFileRoute } from '@tanstack/react-router'
 import ContactForm from '@/components/large-contact-form'
 import { MarketingLayout } from '@/components/marketing-layout'
 import { loadDefaultLocalePage } from '@/lib/i18n/loader'
+import { createFileRoute } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/contact')({
   loader: () => loadDefaultLocalePage(),

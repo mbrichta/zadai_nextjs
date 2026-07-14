@@ -1,21 +1,32 @@
-import type { Locale } from '@/lib/i18n/config'
-import type { Dictionary } from '@/lib/i18n/dictionaries'
+import type { ReactNode } from 'react'
+
 import { Navbar } from '@/components/navbar'
 import { ThemeProvider } from '@/components/theme-provider'
+import { Toaster } from '@/components/ui/sonner'
+import type { Locale } from '@/lib/i18n/config'
+import type { Dictionary } from '@/lib/i18n/dictionaries'
 
-export function MarketingLayout({
-  dictionary,
-  lang,
-  children,
-}: {
+type MarketingLayoutProps = {
+  children: ReactNode
   dictionary: Dictionary
   lang: Locale
-  children: React.ReactNode
-}) {
+}
+
+export function MarketingLayout({
+  children,
+  dictionary,
+  lang,
+}: MarketingLayoutProps) {
   return (
     <ThemeProvider>
-      <Navbar dictionary={dictionary as never} lang={lang} />
-      <main className="pt-16">{children}</main>
+      <div className="marketing-bg min-h-screen">
+        <Navbar
+          dictionary={dictionary as Parameters<typeof Navbar>[0]['dictionary']}
+          lang={lang}
+        />
+        <main className="pt-16">{children}</main>
+        <Toaster />
+      </div>
     </ThemeProvider>
   )
 }

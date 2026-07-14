@@ -1,5 +1,5 @@
-import axios from 'axios'
 import { createFileRoute } from '@tanstack/react-router'
+import axios from 'axios'
 
 export const Route = createFileRoute('/api/verify-recaptcha')({
   server: {
@@ -35,10 +35,13 @@ export const Route = createFileRoute('/api/verify-recaptcha')({
           const message =
             error instanceof Error ? error.message : 'Unknown error'
           console.error('Error verifying reCAPTCHA', error)
-          return new Response(JSON.stringify({ success: false, error: message }), {
-            status: 500,
-            headers: { 'Content-Type': 'application/json' },
-          })
+          return new Response(
+            JSON.stringify({ success: false, error: message }),
+            {
+              status: 500,
+              headers: { 'Content-Type': 'application/json' },
+            },
+          )
         }
       },
     },

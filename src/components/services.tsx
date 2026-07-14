@@ -1,70 +1,68 @@
-import {
-  FileText,
-  GitBranch,
-  LineChart,
-  UserIcon,
-} from 'lucide-react'
+import { Bot, FileText, GitBranch, LineChart, Wrench } from 'lucide-react'
+
+import { Container } from '@/components/marketing/container'
+import { Section, SectionHeader } from '@/components/marketing/section-header'
+import { Badge } from '@/components/ui/badge'
 import {
   Card,
   CardContent,
+  CardDescription,
   CardHeader,
   CardTitle,
-  CardDescription,
-} from "@/components/ui/card";
-import type { dict } from "@/types/dictionary";
+} from '@/components/ui/card'
+import type { dict } from '@/types/dictionary'
 
 type ServicesProps = {
-  dictionary: dict;
-};
+  dictionary: dict
+}
 
-const ICONS = [LineChart, FileText, GitBranch, UserIcon, LineChart];
+const ICONS = [LineChart, FileText, GitBranch, Bot, Wrench]
 
 export function Services({ dictionary }: ServicesProps) {
   const servicesDict = dictionary.services as {
     heading: string
+    eyebrow: string
     items: { title: string; description: string }[]
   }
-  const { heading, items } = servicesDict
+  const { heading, eyebrow, items } = servicesDict
 
   return (
-    <section id="services" className="py-20 bg-background">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section heading */}
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-16 text-primary">
-          {heading}
-        </h2>
+    <Section id="services">
+      <Container>
+        <SectionHeader eyebrow={eyebrow} title={heading} />
 
-        {/* Services grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mx-auto">
-          {items.map(
-            (item: { title: string; description: string }, index: number) => {
-              const Icon = ICONS[index % ICONS.length]; // Rotate through icons
-              return (
-                <Card
-                  key={item.title}
-                  className={`bg-primary text-white hover:bg-primary/90 transition-colors ${
-                    index === 0 ? "lg:col-span-2" : ""
-                  }`}
-                >
-                  <CardHeader>
-                    <div className="h-12 w-12 rounded-lg bg-white/10 flex items-center justify-center mb-4">
-                      <Icon className="h-6 w-6 text-white" />
-                    </div>
-                    <CardTitle className="text-xl font-semibold">
-                      {item.title}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <CardDescription className="text-white/80">
-                      {item.description}
-                    </CardDescription>
-                  </CardContent>
-                </Card>
-              );
-            }
-          )}
+        <div className="grid grid-cols-1 border border-border bg-card md:grid-cols-2 lg:grid-cols-3">
+          {items.map((item, index) => {
+            const Icon = ICONS[index % ICONS.length]
+            return (
+              <Card
+                key={item.title}
+                className="-m-px rounded-none border-border"
+              >
+                <CardHeader>
+                  <div className="mb-4 flex items-center justify-between">
+                    <Badge
+                      variant="outline"
+                      className="rounded-md font-mono text-[11px]"
+                    >
+                      {String(index + 1).padStart(2, '0')}
+                    </Badge>
+                    <Icon className="size-3.5 text-accent" />
+                  </div>
+                  <CardTitle className="text-lg leading-tight">
+                    {item.title}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <CardDescription className="text-sm leading-relaxed">
+                    {item.description}
+                  </CardDescription>
+                </CardContent>
+              </Card>
+            )
+          })}
         </div>
-      </div>
-    </section>
-  );
+      </Container>
+    </Section>
+  )
 }

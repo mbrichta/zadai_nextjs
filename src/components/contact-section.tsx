@@ -1,4 +1,6 @@
-import ContactFormSmall from './small-contact-form'
+import { Container } from '@/components/marketing/container'
+import { Section, SectionHeader } from '@/components/marketing/section-header'
+import ContactFormSmall from '@/components/small-contact-form'
 import type { dict } from '@/types/dictionary'
 
 export default function ContactSection({
@@ -14,16 +16,21 @@ export default function ContactSection({
   const { heading, slogan, description } = section
 
   return (
-    <section className="py-16">
-      <div className="max-w-3xl mx-auto px-4 text-center">
-        <span className="text-sm uppercase text-gray-500 block mb-2">
-          {slogan}
-        </span>
-        <h2 className="text-3xl font-bold mb-2">{heading}</h2>
-        <p className="text-gray-600 mb-8">{description}</p>
-
-        <ContactFormSmall dictionary={dictionary} />
-      </div>
-    </section>
+    <Section>
+      <Container>
+        <div className="grid gap-8 border border-border bg-card p-6 md:grid-cols-[0.8fr_1.2fr] md:p-8">
+          <SectionHeader
+            eyebrow={slogan}
+            title={heading}
+            description={description}
+            align="left"
+            className="mb-0"
+          />
+          <div className="border-t border-border pt-6 md:border-t-0 md:border-l md:pt-0 md:pl-8">
+            <ContactFormSmall dictionary={dictionary} />
+          </div>
+        </div>
+      </Container>
+    </Section>
   )
 }

@@ -1,6 +1,17 @@
-import { Button } from '@/components/ui/button'
 import { useRef, useState } from 'react'
 import type ReCAPTCHA from 'react-google-recaptcha'
+
+import { Alert, AlertDescription } from '@/components/ui/alert'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import { services } from './large-contact-form'
 
 interface Dict {
@@ -16,8 +27,6 @@ export default function ContactFormSmall({ dictionary }: ContactFormProps) {
     emailLabel,
     companyNameLabel,
     servicesLabel,
-    recaptchaLabel: _recaptchaLabel,
-    recaptchaMessage: _recaptchaMessage,
     noServicesMessage,
     submitButton,
     submittingButton,
@@ -31,18 +40,15 @@ export default function ContactFormSmall({ dictionary }: ContactFormProps) {
     nombreEmpresa: '',
     servicios: services.length > 0 ? services[0].value : '',
   })
-  const [_recaptchaToken, _setRecaptchaToken] = useState<string | null>(null)
   const recaptchaRef = useRef<ReCAPTCHA>(null)
 
   const [submitting, setSubmitting] = useState<boolean>(false)
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState<string | null>(null)
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
-  ) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value })
-  }
+  const servicesOptions = (
+    dictionary.contactPage as Record<string, Record<string, string>>
+  ).servicesOptions
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -66,128 +72,103 @@ export default function ContactFormSmall({ dictionary }: ContactFormProps) {
       )
     } finally {
       setSubmitting(false)
-      if (recaptchaRef.current) {
-        recaptchaRef.current.reset()
-      }
-      _setRecaptchaToken(null)
+      recaptchaRef.current?.reset()
     }
   }
 
+  if (success) {
+    return (
+      <Alert>
+        <AlertDescription>{success}</AlertDescription>
+      </Alert>
+    )
+  }
+
   return (
-    <>
-      {success && (
-        <div className="mb-4 p-4 text-green-700 bg-green-100 border border-green-400 rounded">
-          {success}
+    <form onSubmit={handleSubmit} className="space-y-5">
+      {error ? (
+        <Alert variant="destructive">
+          <AlertDescription>{error}</AlertDescription>
+        </Alert>
+      ) : null}
+
+      <div className="grid gap-4 md:grid-cols-2">
+        <div className="space-y-2">
+          <Label htmlFor="nombre">{nameLabel}</Label>
+          <Input
+            type="text"
+            id="nombre"
+            name="nombre"
+            value={formData.nombre}
+            onChange={(e) =>
+              setFormData({ ...formData, nombre: e.target.value })
+            }
+            placeholder={nameLabel}
+            required
+          />
         </div>
-      )}
 
-      {error && (
-        <div className="mb-4 p-4 text-red-700 bg-red-100 border border-red-400 rounded">
-          {error}
+        <div className="space-y-2">
+          <Label htmlFor="correo">{emailLabel}</Label>
+          <Input
+            type="email"
+            id="correo"
+            name="correo"
+            value={formData.correo}
+            onChange={(e) =>
+              setFormData({ ...formData, correo: e.target.value })
+            }
+            placeholder={emailLabel}
+            required
+          />
         </div>
-      )}
+      </div>
 
-      {!success && (
-        <form onSubmit={handleSubmit} className="space-y-6 text-left">
-          <div className="flex md:flex-row flex-col justify-center items-center gap-6 w-full">
-            <div className="w-full">
-              <label htmlFor="nombre" className="block font-semibold">
-                {nameLabel}
-              </label>
-              <input
-                type="text"
-                id="nombre"
-                name="nombre"
-                value={formData.nombre}
-                onChange={handleChange}
-                className="block w-full border border-gray-400 rounded-md p-2 focus:outline-none focus:border-gray-600"
-                placeholder={nameLabel}
-                required
-              />
-            </div>
+      <div className="space-y-2">
+        <Label htmlFor="nombreEmpresa">{companyNameLabel}</Label>
+        <Input
+          type="text"
+          id="nombreEmpresa"
+          name="nombreEmpresa"
+          value={formData.nombreEmpresa}
+          onChange={(e) =>
+            setFormData({ ...formData, nombreEmpresa: e.target.value })
+          }
+          placeholder={companyNameLabel}
+          required
+        />
+      </div>
 
-            <div className="w-full">
-              <label htmlFor="correo" className="block font-semibold">
-                {emailLabel}
-              </label>
-              <input
-                type="email"
-                id="correo"
-                name="correo"
-                value={formData.correo}
-                onChange={handleChange}
-                className="block w-full border border-gray-400 rounded-md p-2 focus:outline-none focus:border-gray-600"
-                placeholder={emailLabel}
-                required
-              />
-            </div>
-          </div>
+      <div className="space-y-2">
+        <Label htmlFor="servicios">{servicesLabel}</Label>
+        {services.length > 0 ? (
+          <Select
+            value={formData.servicios}
+            onValueChange={(value) =>
+              setFormData({ ...formData, servicios: value })
+            }
+          >
+            <SelectTrigger id="servicios" className="w-full">
+              <SelectValue placeholder={servicesLabel} />
+            </SelectTrigger>
+            <SelectContent>
+              {services.map((service) => (
+                <SelectItem key={service.value} value={service.value}>
+                  {servicesOptions[service.labelKey]}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        ) : (
+          <p className="text-sm text-destructive">{noServicesMessage}</p>
+        )}
+      </div>
 
-          <div>
-            <label htmlFor="nombreEmpresa" className="block mb-1 font-semibold">
-              {companyNameLabel}
-            </label>
-            <input
-              type="text"
-              id="nombreEmpresa"
-              name="nombreEmpresa"
-              value={formData.nombreEmpresa}
-              onChange={handleChange}
-              className="block w-full border border-gray-400 rounded-md p-2 focus:outline-none focus:border-gray-600"
-              placeholder={companyNameLabel}
-              required
-            />
-          </div>
-
-          <div>
-            <label htmlFor="servicios" className="block mb-1 font-semibold">
-              {servicesLabel}
-            </label>
-            {services.length > 0 ? (
-              <select
-                id="servicios"
-                name="servicios"
-                value={formData.servicios}
-                onChange={handleChange}
-                className="block w-full border border-gray-400 rounded-md p-2 focus:outline-none focus:border-gray-600"
-                required
-              >
-                {services.map((service) => (
-                  <option key={service.value} value={service.value}>
-                    {
-                      (
-                        dictionary.contactPage as Record<
-                          string,
-                          Record<string, string>
-                        >
-                      ).servicesOptions[service.labelKey]
-                    }
-                  </option>
-                ))}
-              </select>
-            ) : (
-              <p className="text-red-500">{noServicesMessage}</p>
-            )}
-          </div>
-
-          <div>
-            {/* <ReCAPTCHA
-              sitekey={
-                process.env.NEXT_PUBLIC_WEBSITE_SECRET_KEY ||
-                "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
-              }
-              onChange={handleRecaptchaChange}
-              ref={recaptchaRef}
-            /> */}
-          </div>
-
-          <div className="text-center">
-            <Button type="submit" disabled={submitting}>
-              {submitting ? submittingButton : submitButton}
-            </Button>
-          </div>
-        </form>
-      )}
-    </>
+      <div>
+        <Button type="submit" disabled={submitting} className="min-w-[140px]">
+          {submitting ? submittingButton : submitButton}
+        </Button>
+      </div>
+    </form>
   )
 }

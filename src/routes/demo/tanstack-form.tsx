@@ -1,6 +1,6 @@
+import { Button } from '@/components/ui/button'
 import { useForm } from '@tanstack/react-form'
 import { createFileRoute } from '@tanstack/react-router'
-import { Button } from '@/components/ui/button'
 
 export const Route = createFileRoute('/demo/tanstack-form')({
   component: TanStackFormDemo,
@@ -68,7 +68,9 @@ function TanStackFormDemo() {
           )}
         </form.Field>
 
-        <form.Subscribe selector={(state) => [state.canSubmit, state.isSubmitting]}>
+        <form.Subscribe
+          selector={(state) => [state.canSubmit, state.isSubmitting]}
+        >
           {([canSubmit, isSubmitting]) => (
             <Button type="submit" disabled={!canSubmit || isSubmitting}>
               {isSubmitting ? 'Submitting…' : 'Submit'}

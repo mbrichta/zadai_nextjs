@@ -1,4 +1,4 @@
-import { defaultLocale, type Locale } from '@/lib/i18n/config'
+import { type Locale, defaultLocale } from '@/lib/i18n/config'
 import { getDictionary } from '@/lib/i18n/dictionaries'
 
 export async function loadLocalePage(locale: Locale) {

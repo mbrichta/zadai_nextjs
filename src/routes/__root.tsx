@@ -1,10 +1,10 @@
+import type { QueryClient } from '@tanstack/react-query'
 import {
   HeadContent,
   Outlet,
   Scripts,
   createRootRouteWithContext,
 } from '@tanstack/react-router'
-import type { QueryClient } from '@tanstack/react-query'
 import appCss from '../styles.css?url'
 
 interface RouterContext {
@@ -17,17 +17,18 @@ export const Route = createRootRouteWithContext<RouterContext>()({
       { charSet: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       {
-        title: 'Digital Solutions Platform',
+        title: 'Mathias Brichta — Digital Strategy, Automation & AI',
       },
       {
         name: 'description',
-        content: 'Transform your business with our digital solutions',
+        content:
+          'Personal site of Mathias Brichta — business analyst and developer helping companies modernize through digital strategy, process automation, and AI.',
       },
     ],
     links: [
       {
         rel: 'stylesheet',
-        href: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap',
+        href: 'https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap',
       },
       { rel: 'stylesheet', href: appCss },
     ],

@@ -1,7 +1,7 @@
-import { createFileRoute } from '@tanstack/react-router'
 import { HomePage } from '@/components/home-page'
 import { MarketingLayout } from '@/components/marketing-layout'
 import { loadDefaultLocalePage } from '@/lib/i18n/loader'
+import { createFileRoute } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/')({
   loader: () => loadDefaultLocalePage(),
