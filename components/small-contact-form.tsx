@@ -4,6 +4,7 @@ import { supabase } from "@/lib/supabase";
 import { Button } from "@/components/ui/button";
 import { services } from "./large-contact-form";
 import ReCAPTCHA from "react-google-recaptcha";
+import axios from "axios";
 
 interface Dict {
   [key: string]: any;
@@ -55,26 +56,36 @@ export default function ContactFormSmall({ dictionary }: ContactFormProps) {
     setError(null);
     setSuccess(null);
 
-    if (!recaptchaToken) {
-      setError(recaptchaMessage);
-      return;
-    }
+    // if (!recaptchaToken) {
+    //   setError(recaptchaMessage);
+    //   return;
+    // }
 
-    setSubmitting(true);
+    // //workflows.mathiasbrichta.com/webhook-test/
+    // setSubmitting(true);
 
     try {
-      const recaptchaResponse = await fetch("/api/verify-recaptcha", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ token: recaptchaToken }),
-      });
-      const recaptchaResult = await recaptchaResponse.json();
+      //   const recaptchaResponse = await fetch("/api/verify-recaptcha", {
+      //     method: "POST",
+      //     headers: { "Content-Type": "application/json" },
+      //     body: JSON.stringify({ token: recaptchaToken }),
+      //   });
+      //   const recaptchaResult = await recaptchaResponse.json();
 
-      if (!recaptchaResult.success) {
-        setError(recaptchaMessage);
-        setSubmitting(false);
-        return;
-      }
+      //   if (!recaptchaResult.success) {
+      //     setError(recaptchaMessage);
+      //     setSubmitting(false);
+      //     return;
+      //   }
+
+      const res = await axios.post(
+        "https://workflows.mathiasbrichta.com/webhook-test/a78d9262-7a8a-4459-aa13-ef38b7b0e317",
+        {
+          form: formData,
+        }
+      );
+
+      console.log(res.data);
 
       const englishService =
         services.find((service) => service.value === formData.servicios)
@@ -204,14 +215,14 @@ export default function ContactFormSmall({ dictionary }: ContactFormProps) {
           </div>
 
           <div>
-            <ReCAPTCHA
+            {/* <ReCAPTCHA
               sitekey={
                 process.env.NEXT_PUBLIC_WEBSITE_SECRET_KEY ||
                 "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
               }
               onChange={handleRecaptchaChange}
               ref={recaptchaRef}
-            />
+            /> */}
           </div>
 
           <div className="text-center">
